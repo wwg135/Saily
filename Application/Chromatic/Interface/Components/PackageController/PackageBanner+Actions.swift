@@ -15,7 +15,10 @@ import UIKit
 
 extension PackageBannerView {
     @objc
-    func dropDownActionList() {
+    func dropDownActionList(gestureReconizer: UILongPressGestureRecognizer?) {
+        if gestureReconizer?.state != UIGestureRecognizer.State.began {
+            return
+        }
         let actions = obtainValidatedBannerActions()
         let dropDown = DropDown(anchorView: buttonAnchor,
                                 selectionAction: {
@@ -26,7 +29,16 @@ extension PackageBannerView {
                                 bottomOffset: nil,
                                 cellConfiguration: nil,
                                 cancelAction: nil)
+        let gen = UIImpactFeedbackGenerator.init(style: .medium);
+                gen.prepare();
+                gen.impactOccurred()
         dropDown.show(onTopOf: window)
+    }
+    
+    @objc
+    func dropDownActionListQuick() {
+        let actions = obtainValidatedBannerActions()
+        self.dealWithAction(actions: actions, index: 0, item: "quick")
     }
 
     func dealWithAction(actions: [PackageMenuAction.MenuAction], index: Int, item _: String) {

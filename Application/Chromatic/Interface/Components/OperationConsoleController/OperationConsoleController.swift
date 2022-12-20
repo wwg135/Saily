@@ -21,6 +21,7 @@ class OperationConsoleController: UIViewController {
     let textView = UITextView()
     let completeBox = UIView()
     let dropDownAnchor = UIView()
+    
     @Atomic var dispatchOnce: Bool = false
 
     override func viewDidLoad() {
@@ -155,7 +156,7 @@ class OperationConsoleController: UIViewController {
 
     static let allActions: [ExitAction] = [
         .init(text: NSLocalizedString("RELOAD_ICON_CACHE", comment: "Reload Icon Cache"),
-              confirmationRequired: true,
+              confirmationRequired: !InterfaceBridge.enableQuickMode,
               action: { controller in
                   let alert = UIAlertController(title: "⚠️",
                                                 message: NSLocalizedString("RELOAD_ICON_CACHE_TASKES_TIME", comment: "Reloading home screen icons will take some time"),
@@ -177,9 +178,12 @@ class OperationConsoleController: UIViewController {
                   }
               }),
         .init(text: NSLocalizedString("RELOAD_HOMESCREEN", comment: "Reload Home Screen"),
-              confirmationRequired: true,
-              action: { _ in
-                  AuxiliaryExecuteWrapper.reloadSpringboard()
+              confirmationRequired: !InterfaceBridge.enableQuickMode,
+              action: { controller in
+                  // does here need animation?
+                  controller.dismiss(animated: true, completion: {
+                      AuxiliaryExecuteWrapper.reloadSpringboard()
+               })
               }),
         .init(text: NSLocalizedString("CLOSE", comment: "Close"),
               confirmationRequired: false,

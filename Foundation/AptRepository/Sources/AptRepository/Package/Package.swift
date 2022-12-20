@@ -68,29 +68,31 @@ public struct Package: Codable, Hashable, Identifiable {
         }
         return nil
     }
+    
+    
 
     public func obtainDownloadLink() -> URL {
         let badUrl = PackageBadUrl
         guard var target = latestMetadata?["filename"] else {
             return badUrl
         }
-
+        
         func createURL(from string: String) -> URL {
-            if let url = URL(string: string) {
-                return url
-            }
-            var charSet = CharacterSet.urlFragmentAllowed
-            charSet = charSet.union(.urlHostAllowed)
-            charSet = charSet.union(.urlPathAllowed)
-            charSet = charSet.union(.urlQueryAllowed)
-            if let encode = string.addingPercentEncoding(withAllowedCharacters: charSet),
-               let url = URL(string: encode)
-            {
-                return url
-            }
-            return badUrl
-        }
-
+                    if let url = URL(string: string) {
+                        return url
+                    }
+                    var charSet = CharacterSet.urlFragmentAllowed
+                    charSet = charSet.union(.urlHostAllowed)
+                    charSet = charSet.union(.urlPathAllowed)
+                    charSet = charSet.union(.urlQueryAllowed)
+                    if let encode = string.addingPercentEncoding(withAllowedCharacters: charSet),
+                       let url = URL(string: encode)
+                    {
+                        return url
+                    }
+                    return badUrl
+                }
+        
         if target.hasPrefix("http") {
             return createURL(from: target)
         }
@@ -100,14 +102,13 @@ public struct Package: Codable, Hashable, Identifiable {
         guard let repo = repoRef else {
             return badUrl
         }
-
+        
         var builder = repo.absoluteString
         while builder.hasSuffix("/") { builder.removeLast() }
         if !target.hasPrefix("/") { builder += "/" }
         builder += target
-
+        
         return createURL(from: builder)
-        // ? isn't part of a path, will resolve to %3F
     }
 
     // MARK: - Static Tools
