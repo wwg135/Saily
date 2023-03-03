@@ -155,21 +155,32 @@ class InstalledController: UICollectionViewController, UICollectionViewDelegateF
         SPIndicator.present(title: NSLocalizedString("ALL_PACKAGES_UP_TO_DATE", comment: "All Packages Up to Date"),
                             preset: .done)
     }
-
+    
+    @objc
+    func blockUpdateAll() {
+        setupRightButtonItem()
+        TaskManager.shared.blockUpdateEverything()
+    }
+    
     func setupRightButtonItem() {
         if updateFound {
             let rightItem = UIBarButtonItem(image: .fluent(.arrowUpCircle24Filled),
                                             style: .done,
                                             target: self,
                                             action: #selector(sendUpdate))
-            navigationItem.rightBarButtonItem = rightItem
+            let blockItem = UIBarButtonItem(title: NSLocalizedString("BLOCK_UPDATE_ALL", comment: "Block Update All (By.zp)"),
+                                           style: .done,
+                                           target: self,
+                                           action: #selector(blockUpdateAll))
+            let spaceItem = UIBarButtonItem(title: "   ", style: .plain, target: nil, action: nil)
+            navigationItem.rightBarButtonItems = [rightItem,spaceItem,blockItem]
         } else {
             let rightItem = UIBarButtonItem(image: .fluent(.checkmarkCircle24Filled),
                                             style: .done,
                                             target: self,
                                             action: #selector(showAllUpdateToDate))
             rightItem.tintColor = .systemGreen
-            navigationItem.rightBarButtonItem = rightItem
+            navigationItem.rightBarButtonItems = [rightItem]
         }
     }
 }

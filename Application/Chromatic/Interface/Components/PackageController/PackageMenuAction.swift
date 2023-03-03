@@ -475,6 +475,12 @@ class PackageMenuAction {
             var fetch = InterfaceBridge
                 .collectedPackages
                 .filter { $0.identity != package.identity }
+            guard (package.repoRef != nil) else {
+                SPIndicator.present(title: NSLocalizedString("TIPS1", comment: "Please search - long press [package list] - overwrite collection"),
+                                    preset: .error,
+                                    from: .center)
+                return
+            }
             fetch.append(package)
             InterfaceBridge.collectedPackages = fetch
             SPIndicator.present(title: NSLocalizedString("DONE", comment: "Done"),
@@ -493,6 +499,12 @@ class PackageMenuAction {
             var fetch = InterfaceBridge
                 .collectedPackages
                 .filter { $0.identity != package.identity }
+		guard (package.repoRef != nil) else {
+                SPIndicator.present(title: NSLocalizedString("TIPS1", comment: "Please search - long press [package list] - overwrite collection"),
+                                    preset: .error,
+                                    from: .center)
+                return
+            }
             fetch.append(package)
             InterfaceBridge.collectedPackages = fetch
             SPIndicator.present(title: NSLocalizedString("DONE", comment: "Done"),

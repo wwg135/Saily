@@ -37,7 +37,7 @@ extension TaskManager {
         }
     }
 
-    private func resolveInstall(action: PackageAction) -> PackageResolutionResult {
+    func resolveInstall(action: PackageAction) -> PackageResolutionResult {
         var context = copyCurrentUserActions()
         context.append(action)
         return resolvePackageActions(context: context, dryRun: false)
@@ -217,5 +217,25 @@ extension TaskManager {
         case .success(resolvedActions: _): return true
         default: return false
         }
+    }
+
+    func blockUpdateEverything() {
+        PackageActionReport.shared.clear()
+        PackageActionReport.shared.openSession()
+        let installed = PackageCenter
+            .default
+            .obtainInstalledPackageList()
+        for item in installed {
+            guard let version = item.latestVersion else { continue }
+            let candidate = PackageCenter
+                .default
+                .obtainUpdateForPackage(with: item.identity,
+                                        version: version)
+                .compactMap { $0 }
+            guard let decision = PackageCenter
+                .default
+                .newestPackage(of: candidate) else { continue }
+	    PackageCenter.default.blockedUpdateTable.append(decision.identity)
+	}
     }
 }

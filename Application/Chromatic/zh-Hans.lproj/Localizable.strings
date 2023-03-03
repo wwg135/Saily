@@ -1,6 +1,9 @@
 /* %d Operation */
 "%d_OPERATIONS" = "%d 个项目";
 
+/* Tips1 */
+"TIPS1" = "收藏姿势不对{搜索-软件包列表-长按-(覆盖)收藏}";
+
 /* Accounts */
 "ACCOUNTS" = "账号";
 
@@ -45,6 +48,9 @@
 
 /* Block Update */
 "BLOCK_UPDATE" = "屏蔽更新";
+
+/* Block Update All (By.zp) */
+"BLOCK_UPDATE_ALL" = "更新退散 (By.真皮)";
 
 /* Broken Repo Removed */
 "BROKEN_REPO_REMOVED" = "已清理破损软件源";
@@ -234,6 +240,9 @@
 
 /* Install */
 "INSTALL" = "安装";
+
+/* Install All (By.zp) */
+"INSTALL_ALL" = "我全要 (By.真皮)";
 
 /* Installation Info Refreshed */
 "INSTALLATION_INFO_REFRESHED" = "本地安装信息已刷新";

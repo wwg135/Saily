@@ -13,10 +13,16 @@ class PackageSavedCollectionController: PackageCollectionController {
     override func viewDidLoad() {
         title = NSLocalizedString("COLLECTED_PACKAGES", comment: "Collected Packages")
         super.viewDidLoad()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: .fluent(.delete24Filled),
+        let clearItem = UIBarButtonItem(image: .fluent(.delete24Filled),
                                                             style: .done,
                                                             target: self,
                                                             action: #selector(clearBlock))
+        let installItem = UIBarButtonItem(title: NSLocalizedString("INSTALL_ALL", comment: "Install All (By.zp)"),
+                                           style: .done,
+                                           target: self,
+                                           action: #selector(installAll))
+        let spaceItem = UIBarButtonItem(title: "   ", style: .plain, target: nil, action: nil)
+        navigationItem.rightBarButtonItems = [clearItem,spaceItem,installItem]
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -46,6 +52,21 @@ class PackageSavedCollectionController: PackageCollectionController {
                                       }))
         present(alert, animated: true, completion: nil)
     }
+
+    @objc
+    func installAll() {
+        let collected = InterfaceBridge.collectedPackages
+	var actions = [TaskManager.PackageAction]()
+        for item in collected {
+            guard (item.repoRef != nil) else { continue }
+            guard let action = TaskManager.PackageAction(action: .install,
+                                           represent: item,
+                                           isUserRequired: true) else { continue }
+	    actions.append(action)
+	}
+	actions.forEach { TaskManager.shared.resolveInstall(action: $0) }
+    }
+
 
     func reloadCollectionItems() {
         dataSource = InterfaceBridge

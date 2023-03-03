@@ -1,6 +1,9 @@
 /* %d Operation */
 "%d_OPERATIONS" = "%d Operation";
 
+/* Tips1 */
+"TIPS1" = "Please search - long press [package list] - overwrite collection";
+
 /* Accounts */
 "ACCOUNTS" = "Accounts";
 
@@ -45,6 +48,9 @@
 
 /* Block Update */
 "BLOCK_UPDATE" = "Block Update";
+
+/* Block Update All (By.zp) */
+"BLOCK_UPDATE_ALL" = "Block Update All (By.zp)";
 
 /* Broken Repo Removed */
 "BROKEN_REPO_REMOVED" = "Broken Repos Removed";
@@ -234,6 +240,9 @@
 
 /* Install */
 "INSTALL" = "Install";
+
+/* Install All (By.zp) */
+"INSTALL_ALL" = "Install All (By.zp)";
 
 /* Installation Info Refreshed */
 "INSTALLATION_INFO_REFRESHED" = "Installation Info Refreshed";
