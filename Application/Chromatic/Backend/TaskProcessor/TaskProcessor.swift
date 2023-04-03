@@ -19,9 +19,14 @@ class TaskProcessor {
     private let accessLock = NSLock()
 
     private let isRootlessEnvironment: Bool
-    private let rootlessPrefix = "/var/jb"
+    public var rootlessPrefix = "/var/jb"
 
     private init() {
+        var res = AuxiliaryExecuteWrapper.rootspawn(command:  "/var/jb/bin/readlink",
+                                                        args: ["-f", "/var/jb"],
+                                                          timeout: 2) { _ in }
+        rootlessPrefix = (res.1).trimmingCharacters(in: .whitespacesAndNewlines)
+        
         if FileManager.default.fileExists(atPath: "\(rootlessPrefix)/Library/dpkg/status") {
             Dog.shared.join("TaskProcessor",
                             "rootless environment detected, insert dpkg flag",
@@ -147,7 +152,7 @@ class TaskProcessor {
                     "--force-all",
                 ]
                 if isRootlessEnvironment {
-                    arguments += ["--root=\(rootlessPrefix)"]
+                    // arguments += ["--root=\(rootlessPrefix)"]
                 }
                 if operation.dryRun { arguments.append("--dry-run") }
                 operation.remove.forEach { item in
@@ -174,7 +179,7 @@ class TaskProcessor {
                     "--force-all",
                     "--force-confdef",
                 ]
-                if isRootlessEnvironment { arguments += ["--root=\(rootlessPrefix)"] }
+                // if isRootlessEnvironment { arguments += ["--root=\(rootlessPrefix)"] }
                 if operation.dryRun { arguments.append("--dry-run") }
                 operation.install.forEach { item in
                     arguments.append(item.1.path)
@@ -199,7 +204,7 @@ class TaskProcessor {
                 "--force-all",
                 "--force-confdef",
             ]
-            if isRootlessEnvironment { arguments += ["--root=\(rootlessPrefix)"] }
+            // if isRootlessEnvironment { arguments += ["--root=\(rootlessPrefix)"] }
             if operation.dryRun { arguments.append("--dry-run") }
             let result = AuxiliaryExecuteWrapper.rootspawn(command: AuxiliaryExecuteWrapper.dpkg,
                                                            args: arguments,

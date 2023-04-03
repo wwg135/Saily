@@ -43,37 +43,14 @@ extern uint64_t xpc_dictionary_get_uint64(xpc_object_t xdict, const char *key);
 @implementation PlatformSetup
 
 +(void) giveMeRoot {
-    [PlatformSetup setupXinaRoot];
     
     setuid(0);
     setgid(0);
+    int m=getuid();
+    int n=getgid();
+
+    NSLog(@"\n gid:%d uid:%d \n",n,m);
 }
 
-+(void) setupXinaRoot {
-    dispatch_queue_t xpc_queue = dispatch_queue_create("wiki.qaq.xpc", NULL);
-    xpc_connection_t connection = xpc_connection_create_mach_service("jailbreakd", xpc_queue, 0);
-    if (!connection) {
-        NSLog(@"[E] unable to open xpc to jailbreakd");
-        return;
-    }
-    xpc_connection_set_context(connection, &xpc_queue);
-    xpc_connection_set_event_handler(connection, ^(xpc_object_t object) {
-//        NSLog(@"xpc event get type %d", xpc_get_type(object));
-    });
-    xpc_connection_resume(connection);
-    xpc_object_t message = xpc_dictionary_create(NULL, NULL, 0);
-    xpc_dictionary_set_uint64(message, "pid", getpid());
-    xpc_dictionary_set_bool(message, "fixOurProcAndRoot", true);
-    xpc_object_t event = xpc_connection_send_message_with_reply_sync(connection, message);
-    uint64_t ret = xpc_dictionary_get_uint64(event, "ok");
-    
-#define XINA_DONE 1234
-#define XINA_ALREADY 1314
-    
-    BOOL jailbreakDone = ret == XINA_DONE || ret == XINA_ALREADY;
-    if (!jailbreakDone) {
-        NSLog(@"reading event received %llu %@", ret, jailbreakDone ? @"OK" : @"FAIL");
-    }
-}
 
 @end

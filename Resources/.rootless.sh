@@ -32,7 +32,8 @@ cd build || exit
 # run license scan at Resources/compile.license.py
 python3 "$GIT_ROOT/Resources/compile.license.py"
 
-TIMESTAMP="$(date +%s)"
+# TIMESTAMP="$(date +%s)"
+TIMESTAMP="205"
 
 # make a dir depending on timestamp
 WORKING_ROOT="Release-$TIMESTAMP"
@@ -92,6 +93,11 @@ cp -r "$GIT_ROOT/Resources/DEBIAN" ./
 sed -i '' "s/ENV_PREFIX=\"\"/ENV_PREFIX=\"\/var\/jb\/\"/g" ./DEBIAN/postinst
 
 sed -i '' "s/@@VERSION@@/2.1-REL-$TIMESTAMP/g" ./DEBIAN/control
+sed -i '' "s/iphoneos-arm/iphoneos-arm64/g" ./DEBIAN/control
+sed -i '' "s/Package: wiki.qaq.chromatic/Package: wiki.qaq.chromatic.rootless/g" ./DEBIAN/control
+sed -i '' "s/Name: Saily/Name: Saily - rootless (zp)/g" ./DEBIAN/control
+mv ./DEBIAN/control ./DEBIAN/control_
+awk '{print} END{print "Conflicts: wiki.qaq.chromatic"}' ./DEBIAN/control_ > ./DEBIAN/control
 
 chmod -R 0755 DEBIAN
 
@@ -100,6 +106,9 @@ dpkg-deb -b . "../$PKG_NAME"
 
 echo "Finished build at $WORKING_ROOT"
 echo "Package available at $WORKING_ROOT/$PKG_NAME"
+
+mv $WORKING_ROOT/$PKG_NAME  ~/Desktop/app
+# rm -rf $WORKING_ROOT
 
 cd "$GIT_ROOT"/build
 
