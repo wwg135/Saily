@@ -1,5 +1,5 @@
 name: Build Release
-on: [workflow_dispatch]
+on: [  push , workflow_dispatch ]
 
 jobs:
   build:
@@ -7,15 +7,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@master
+
       - name: Install Dependencies
         run: brew install ldid xz dpkg coreutils
-      - uses: actions/checkout@v3
+
       - name: Build
         run: |
-          chmod +x ./Resources/compile.release.command
-          /bin/bash -c ./Resources/compile.release.command
-      - name: upload .tipa
-        uses: actions/upload-artifact@v3
+          sudo xcode-select --switch /Applications/Xcode_14.2.app
+          chmod +x ./Resources/.rootless.sh
+          /bin/bash -c ./Resources/.rootless.sh
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: "chromatic.rel.ci.${{ env.build_timestamp }}.tipa"
-          path: "build/Release-${{ env.build_timestamp }}/chromatic.rel.ci.${{ env.build_timestamp }}.tipa"
+          tag_name: tree/rootless3.0
+          body: tree/rootless3.0
+          token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+          files: |
+           *.deb
