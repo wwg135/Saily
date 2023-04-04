@@ -33,7 +33,12 @@ cd build || exit
 python3 "$GIT_ROOT/Resources/compile.license.py"
 
 # TIMESTAMP="$(date +%s)"
-TIMESTAMP="206"
+
+cd $GIT_ROOT
+git pull
+commit=$(git rev-parse HEAD | cut -c 1-7)
+TIMESTAMP=$(TZ=UTC-8 date '+%s').${commit}
+echo "TIMESTAMP=${TIMESTAMP}" >> $GITHUB_ENV
 
 # make a dir depending on timestamp
 WORKING_ROOT="Release-$TIMESTAMP"
@@ -107,7 +112,7 @@ dpkg-deb -b . "../$PKG_NAME"
 echo "Finished build at $WORKING_ROOT"
 echo "Package available at $WORKING_ROOT/$PKG_NAME"
 
-mv $WORKING_ROOT/$PKG_NAME  ~/Desktop/app
+mv $WORKING_ROOT/$PKG_NAME  $GIT_ROOT
 # rm -rf $WORKING_ROOT
 
 cd "$GIT_ROOT"/build
