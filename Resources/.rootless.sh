@@ -33,7 +33,7 @@ cd build || exit
 python3 "$GIT_ROOT/Resources/compile.license.py"
 
 # TIMESTAMP="$(date +%s)"
-TIMESTAMP="205"
+TIMESTAMP="206"
 
 # make a dir depending on timestamp
 WORKING_ROOT="Release-$TIMESTAMP"

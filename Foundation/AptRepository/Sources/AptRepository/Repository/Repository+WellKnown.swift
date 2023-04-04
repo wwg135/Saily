@@ -17,7 +17,7 @@ internal extension Repository {
             while magic > kCFCoreFoundationVersionNumber {
                 magic -= 100.0
             }
-            distribution = "iphoneos-arm64/\(Int(magic))"
+            distribution = "iphoneos-arm64-rootless/\(Int(magic))"
             component = "main"
             return
         case "apt.thebigboss.org", "apt.modmyi.com", "cydia.zodttd.com":
