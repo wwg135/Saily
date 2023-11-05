@@ -32,7 +32,7 @@ extension SettingView {
         let openDownloadedPackages = SettingElement(iconSystemNamed: "tray.full",
                                                     text: NSLocalizedString("OPEN_DOWNLOAD", comment: "Open Download"),
                                                     dataType: .submenuWithAction, initData: nil) { _, _ in
-            let urlString = "filza://" + CariolNetwork.shared.workingLocation.path
+            let urlString = "fffff://" + CariolNetwork.shared.workingLocation.path
             if let url = URL(string: urlString),
                UIApplication.shared.canOpenURL(url)
             {
