@@ -47,20 +47,37 @@ class HandyTabBarController: UITabBarController, UIGestureRecognizerDelegate {
     }
 
     private var privSelectIndex: Int?
+    private var privClicks = 0
     override func tabBar(_: UITabBar, didSelect _: UITabBarItem) {
         // double tap to select search bar
         DispatchQueue.main.async { [self] in
             debugPrint("selecting \(selectedIndex)")
             if privSelectIndex == selectedIndex {
-                privSelectIndex = nil
-                if let controller = view.window?.topMostViewController as? SearchController {
-                    controller.searchController.searchBar.becomeFirstResponder()
-                }
-                if let controller = view.window?.topMostViewController as? HDInstalledController {
-                    controller.searchController.searchBar.becomeFirstResponder()
+                privClicks += 1
+                if privClicks >= 2 {
+                    privSelectIndex = nil
+                    if let controller = view.window?.topMostViewController as? SearchController {
+                        controller.searchController.searchBar.becomeFirstResponder()
+                    }
+                    if let controller = view.window?.topMostViewController as? HDInstalledController {
+                        controller.searchController.searchBar.becomeFirstResponder()
+                    }
+                    if let controller = view.window?.topMostViewController as? HDRepoController {
+                        RepositoryCenter.default.dispatchForceUpdateRequestOnAll()
+                        DispatchQueue.main.async {
+                            NotificationCenter.default.post(name: .RepositoryQueueChanged, object: nil)
+                        }
+                    }
+                    if let controller = view.window?.topMostViewController as? HDMainController {
+                        RepositoryCenter.default.dispatchForceUpdateRequestOnAll()
+                        DispatchQueue.main.async {
+                            NotificationCenter.default.post(name: .RepositoryQueueChanged, object: nil)
+                        }
+                    }
                 }
             } else {
                 privSelectIndex = selectedIndex
+                privClicks = 0
             }
         }
     }
