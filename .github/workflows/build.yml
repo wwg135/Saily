@@ -19,8 +19,9 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: tree/rootless3.0
-          body: tree/rootless3.0
+          tag_name: tree/fakeURLSchemes
+          body: tree/fakeURLSchemes
+          prerelease: true
           token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
           files: |
            *.deb
