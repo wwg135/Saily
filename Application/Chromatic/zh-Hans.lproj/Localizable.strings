@@ -203,7 +203,7 @@
 "ESSENTIAL_PACKAG_IN_REMOVE_QUEUE" = "在删除队列中检测到系统插件包，这可能会损坏你的设备。";
 
 /* Execute */
-"EXECUTE" = "执行";
+"EXECUTE" = "注销";
 
 /* Failed to create operation payload, incomplete download or broken resources. Please try again later. */
 "FAILED_TO_CREATE_PAYLOAD_MAYBE_DOWNLOAD_FAILED" = "无法创建操作数据，下载未完成或数据已损坏。请稍后再试。";
