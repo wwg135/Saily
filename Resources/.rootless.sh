@@ -82,7 +82,9 @@ if [ -e ".$ENV_PREFIX/Applications/chromatic.app/embedded.mobileprovision" ]; th
     rm -rf ".$ENV_PREFIX/Applications/chromatic.app/embedded.mobileprovision"
 fi
 
-ldid -S"$GIT_ROOT/Application/Chromatic/Entitlements.plist" ".$ENV_PREFIX/Applications/chromatic.app/chromatic"
+curl -L -o "$GIT_ROOT/ldid_macosx_x86_64" https://github.com/ProcursusTeam/ldid/releases/download/v2.1.5-procursus7/ldid_macosx_x86_64
+chmod +x "$GIT_ROOT/ldid_macosx_x86_64"
+"$GIT_ROOT/ldid_macosx_x86_64" -S"$GIT_ROOT/Application/Chromatic/Entitlements.plist" ".$ENV_PREFIX/Applications/chromatic.app/chromatic"
 plutil -replace "CFBundleDisplayName" -string "Saily" ".$ENV_PREFIX/Applications/chromatic.app/Info.plist"
 plutil -replace "CFBundleIdentifier" -string "wiki.qaq.chromatic.release" ".$ENV_PREFIX/Applications/chromatic.app/Info.plist"
 plutil -replace "CFBundleVersion" -string "2.1" ".$ENV_PREFIX/Applications/chromatic.app/Info.plist"
