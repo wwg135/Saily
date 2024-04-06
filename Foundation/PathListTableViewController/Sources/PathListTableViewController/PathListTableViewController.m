@@ -212,13 +212,13 @@
     if (self.pressToCopy) {
         NSString *content = (self.searchController.isActive ? self.filteredContents[indexPath.row] : self.contents[indexPath.row]);
         NSArray <UIAction *> *cellActions = @[
-            [UIAction actionWithTitle:@"Copy Name" image:[UIImage systemImageNamed:@"doc.on.doc"] identifier:nil handler:^(__kindof UIAction *_Nonnull action) {
+            [UIAction actionWithTitle:@"复制名称" image:[UIImage systemImageNamed:@"doc.on.doc"] identifier:nil handler:^(__kindof UIAction *_Nonnull action) {
                  [[UIPasteboard generalPasteboard] setString:[content lastPathComponent]];
              }],
-            [UIAction actionWithTitle:@"Copy Path" image:[UIImage systemImageNamed:@"doc.on.clipboard"] identifier:nil handler:^(__kindof UIAction *_Nonnull action) {
+            [UIAction actionWithTitle:@"复制路径" image:[UIImage systemImageNamed:@"doc.on.clipboard"] identifier:nil handler:^(__kindof UIAction *_Nonnull action) {
                  [[UIPasteboard generalPasteboard] setString:content];
              }],
-            [UIAction actionWithTitle:@"Open In Filza" image:[UIImage systemImageNamed:@"link"] identifier:nil handler:^(__kindof UIAction *_Nonnull action) {
+            [UIAction actionWithTitle:@"在 Filza 打开" image:[UIImage systemImageNamed:@"link"] identifier:nil handler:^(__kindof UIAction *_Nonnull action) {
                  NSString *urlString = [NSString stringWithFormat:@"filza://%@", [content stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
                  NSURL *url = [NSURL URLWithString:urlString];
                  if ([[UIApplication sharedApplication] canOpenURL:url]) {
