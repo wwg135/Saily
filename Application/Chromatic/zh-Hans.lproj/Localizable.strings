@@ -2,7 +2,7 @@
 "%d_OPERATIONS" = "%d 个项目";
 
 /* Tips1 */
-"TIPS1" = "收藏姿势不对{搜索-插件包列表-长按-(覆盖)收藏}";
+"TIPS1" = "收藏姿势不对{搜索-插件列表-长按-(覆盖)收藏}";
 
 /* Accounts */
 "ACCOUNTS" = "账号";
@@ -17,19 +17,19 @@
 "ADDITIONAL_INSTALL" = "依赖";
 
 /* Additional operations are appointed by package vender. */
-"ADDITIONAL_OPERATIONS_ARE_APPOINTED_BY_PACKAGE_VENDER" = "额外的操作由插件包开发者指定";
+"ADDITIONAL_OPERATIONS_ARE_APPOINTED_BY_PACKAGE_VENDER" = "额外的操作由插件开发者指定";
 
 /* Additional Remove */
 "ADDITIONAL_REMOVE" = "冲突";
 
 /* All Packages Up to Date */
-"ALL_PACKAGES_UP_TO_DATE" = "插件包均为最新";
+"ALL_PACKAGES_UP_TO_DATE" = "插件均为最新";
 
 /* Apt Records */
 "APT_RECORDS" = "APT 记录";
 
 /* Following software sources come from APT or other package managers */
-"APT_RECORDS_DESCRIPTION" = "以下插件源来自本地 APT 记录或其他插件包管理器。";
+"APT_RECORDS_DESCRIPTION" = "以下插件源来自本地 APT 记录或其他插件管理器。";
 
 /* Author */
 "AUTHOR" = "作者";
@@ -86,13 +86,13 @@
 "COLLECT_AND_SAVE" = "保存到收藏";
 
 /* Collected Packages */
-"COLLECTED_PACKAGES" = "保存的插件包";
+"COLLECTED_PACKAGES" = "保存的插件";
 
 /* Search Result: Collection */
 "Collection" = "收藏";
 
 /* Communicating with vender */
-"COMMUNICATING_WITH_VENDER" = "正在联系插件包制造商";
+"COMMUNICATING_WITH_VENDER" = "正在联系插件制造商";
 
 /* Concurrent Download */
 "CONCURRENT_DOWNLOAD" = "下载队列";
@@ -179,7 +179,7 @@
 "ENABLE_HISTORY" = "启用历史记录";
 
 /* Enable random device info will disable commercial operations */
-"ENABLE_RANDOM_DEVICE_INFO_WILL_DISABLE_COMMERCIAL_OPERATIONS" = "启用随机设备信息将会禁用付费插件包。";
+"ENABLE_RANDOM_DEVICE_INFO_WILL_DISABLE_COMMERCIAL_OPERATIONS" = "启用随机设备信息将会禁用付费插件。";
 
 /* Enable Quick Mode */
 "ENABLE_QUICK_MODE" = "启用快速模式";
@@ -200,7 +200,7 @@
 "ERROR_OCCURRED" = "遇到未知错误";
 
 /* Essential package in removal queue, this may brick your device. */
-"ESSENTIAL_PACKAG_IN_REMOVE_QUEUE" = "在删除队列中检测到系统插件包，这可能会损坏你的设备。";
+"ESSENTIAL_PACKAG_IN_REMOVE_QUEUE" = "在删除队列中检测到系统插件，这可能会损坏你的设备。";
 
 /* Execute */
 "EXECUTE" = "注销";
@@ -209,7 +209,7 @@
 "FAILED_TO_CREATE_PAYLOAD_MAYBE_DOWNLOAD_FAILED" = "无法创建操作数据，下载未完成或数据已损坏。请稍后再试。";
 
 /* Failed to verify package */
-"FAILED_VERIFY_PACKAGE" = "插件包数据校验失败";
+"FAILED_VERIFY_PACKAGE" = "插件数据校验失败";
 
 /* Features */
 "FEATURES" = "功能";
@@ -230,7 +230,7 @@
 "HISTORY_RECORDS_DESCRIPTION" = "历史记录保存了你之前删除的插件源。操作记录将会保留一些时间直到你手动删除。";
 
 /* Initializing Packages Engine */
-"INITIALIZING_PACKAGES_ENGINE" = "正在初始化插件包引擎";
+"INITIALIZING_PACKAGES_ENGINE" = "正在初始化插件引擎";
 
 /* Initializing Repository Engine */
 "INITIALIZING_REPOSITORY_ENGINE" = "正在初始化插件源引擎";
@@ -335,13 +335,13 @@
 "OPTION" = "选项";
 
 /* Package */
-"PACKAGE" = "插件包";
+"PACKAGE" = "插件";
 
 /* Package Detail */
-"PACKAGE_DETAIL" = "插件包详情";
+"PACKAGE_DETAIL" = "插件详情";
 
 /* Packages */
-"PACKAGES" = "插件包";
+"PACKAGES" = "插件";
 
 /* Pasteboard Records */
 "PASTEBOARD_REPO" = "剪贴板记录";
@@ -461,7 +461,7 @@
 "SEARCH_GUIDE_AUTHOR" = "搜索任意作者";
 
 /* Search in your favorite collection. */
-"SEARCH_GUIDE_FAVORITE" = "搜索收藏并储存的插件包";
+"SEARCH_GUIDE_FAVORITE" = "搜索收藏并储存的插件";
 
 /* Search for a packages with name or description. */
 "SEARCH_GUIDE_PACAKGE" = "可模糊搜索名称或描述";
@@ -536,7 +536,7 @@
 "UNLOCKING_SYSTEM" = "解锁系统资源";
 
 /* Unpacking Package */
-"UNPACKING_PACKAGE" = "正在加载插件包数据";
+"UNPACKING_PACKAGE" = "正在加载插件数据";
 
 /* Update */
 "UPDATE" = "更新";
@@ -563,7 +563,7 @@
 "VERIFICATION_FAILURE_OCCURRED" = "验证失败";
 
 /* Package not available, contact vender for support */
-"VERNDER_PACKAGE_NOT_AVAILABLE" = "插件包不可用，请联系制造商反馈问题。";
+"VERNDER_PACKAGE_NOT_AVAILABLE" = "插件不可用，请联系制造商反馈问题。";
 
 /* Version */
 "VERSION" = "版本";
