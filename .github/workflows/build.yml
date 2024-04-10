@@ -34,13 +34,13 @@ jobs:
           sudo xcode-select --switch /Applications/Xcode_14.2.app
           chmod +x ./Resources/.rootless.sh
           /bin/bash -c ./Resources/.rootless.sh
-          mv *.deb saily_3.0.ipa
+          mv *.deb saily_3.0.deb
 
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: 3.0
-          body: rootless3.0
+          body: rootless_3.0
           prerelease: false
           token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
           files: |
