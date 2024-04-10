@@ -39,9 +39,11 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
+          name: 3.0
           tag_name: 3.0
+          target_commitish: dev
           body: rootless_3.0
-          prerelease: false
+          latest: true
           token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
           files: |
            *.deb
