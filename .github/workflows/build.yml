@@ -1,5 +1,23 @@
-name: Build Release
-on: [   workflow_dispatch ]
+name: build_Release
+on:
+  push:
+    branches:
+      - dev
+    paths-ignore:
+      - ".gitignore"
+  pull_request:
+    branches:
+      - dev
+    paths-ignore:
+      - ".gitignore"
+  workflow_dispatch:
+  
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -16,11 +34,13 @@ jobs:
           sudo xcode-select --switch /Applications/Xcode_14.2.app
           chmod +x ./Resources/.rootless.sh
           /bin/bash -c ./Resources/.rootless.sh
+          mv *.deb saily_3.0.ipa
+
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: tree/rootless3.0
-          body: tree/rootless3.0
+          tag_name: 3.0
+          body: rootless3.0
           prerelease: false
           token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
           files: |
