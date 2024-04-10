@@ -29,6 +29,9 @@ enum InterfaceBridge {
     
     @PropertiesWrapper(key: "enableQuickMode", defaultValue: true)
     public static var enableQuickMode: Bool
+    
+    @PropertiesWrapper(key: "enableDefaultSource", defaultValue: true)
+    public static var enableDefaultSource: Bool
 
     public static func removeRecoveryFlag(with reason: String, userRequested: Bool) {
         if !applicationShouldEnterRecovery || userRequested {

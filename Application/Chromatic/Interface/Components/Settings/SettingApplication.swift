@@ -71,7 +71,22 @@ extension SettingView {
                 self.dispatchValueUpdate()
             }
         }
+
+        let enableDefaultSource = SettingElement(iconSystemNamed: "plus",
+                                             text: NSLocalizedString("ENABLE_ADD_DEFAULT_SOURCE", comment: "Enable Add Default Source"),
+                                             dataType: .switcher) {
+            InterfaceBridge.enableDefaultSource ? "YES" : "NO"
+        } withAction: { changeValueTo, _ in
+            if changeValueTo ?? false {
+                InterfaceBridge.enableDefaultSource = true
+                self.dispatchValueUpdate()
+            } else {
+                InterfaceBridge.enableDefaultSource = false
+                self.dispatchValueUpdate()
+            }
+        }
         
+
 #if DEBUG
         let crashApp = SettingElement(iconSystemNamed: "xmark.octagon.fill",
                                       text: "EXEC_BAD_ACCESS",
@@ -186,6 +201,7 @@ extension SettingView {
         addSubview(backgroundView)
         addSubview(enableShareSheet)
         addSubview(enableQuickMode)
+        addSubview(enableDefaultSource)
 #if DEBUG
         addSubview(crashApp)
 #endif
@@ -213,6 +229,13 @@ extension SettingView {
             x.height.equalTo(28)
         }
         anchor = enableQuickMode
+        enableDefaultSource.snp.makeConstraints { x in
+            x.left.equalTo(safeAnchor.snp.left).offset(8)
+            x.right.equalTo(safeAnchor.snp.right).offset(-8)
+            x.top.equalTo(anchor.snp.bottom).offset(18)
+            x.height.equalTo(28)
+        }
+        anchor = enableDefaultSource
 #if DEBUG
         crashApp.snp.makeConstraints { x in
             x.left.equalTo(safeAnchor.snp.left).offset(8)

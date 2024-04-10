@@ -27,15 +27,6 @@ extension InterfaceBridge {
     }
 
     static let taskDropDownActions: [TaskDropDownAction] = [
-        .init(label: NSLocalizedString("DRY_RUN", comment: "Dry Run"), action: {
-            let target = OperationConsoleController()
-            var dryRunPayload = $1
-            dryRunPayload.dryRun = true
-            target.operationPayload = dryRunPayload
-            target.modalTransitionStyle = .coverVertical
-            target.modalPresentationStyle = .formSheet
-            $0.parentViewController?.present(target, animated: true, completion: nil)
-        }),
         .init(label: NSLocalizedString("EXECUTE", comment: "Execute"), action: {
             let target = OperationConsoleController()
             target.operationPayload = $1
