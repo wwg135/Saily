@@ -582,3 +582,7 @@
 
 /* Worldwide Search */
 "WORLDWIDE_SEARCH" = "全局搜索";
+
+/* Enable Add Default Source */
+"ENABLE_ADD_DEFAULT_SOURCE" = "自动添加默认源";
+
