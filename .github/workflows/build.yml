@@ -1,5 +1,23 @@
-name: Build Release
-on: [   workflow_dispatch ]
+name: build_Release
+on:
+  push:
+    branches:
+      - dev
+    paths-ignore:
+      - ".gitignore"
+  pull_request:
+    branches:
+      - dev
+    paths-ignore:
+      - ".gitignore"
+  workflow_dispatch:
+  
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
 
 jobs:
   build:
