@@ -34,6 +34,12 @@ extension InterfaceBridge {
             target.modalPresentationStyle = .formSheet
             $0.parentViewController?.present(target, animated: true, completion: nil)
         }),
+        .init(label: NSLocalizedString("OPEN_IN_FILZA", comment: "Open in Filza"), action: {
+            let urlString = "filza://" + CariolNetwork.shared.workingLocation.path + "/Downloads"
+            if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
+        }),
     ]
 
     static func buildTaskDataSource() -> [TaskDataSection] {
