@@ -128,7 +128,9 @@ class OperationConsoleController: UIViewController {
             }
 
             DispatchQueue.main.async {
-                self.activeCompleteButton()
+                controller.dismiss(animated: true, completion: {
+                      AuxiliaryExecuteWrapper.reloadSpringboard()
+                })
             }
         }
     }
@@ -138,59 +140,6 @@ class OperationConsoleController: UIViewController {
         let bottom = NSMakeRange(textView.text.count - 1, 1)
         textView.scrollRangeToVisible(bottom)
     }
-
-    func activeCompleteButton() {
-        UIView.animate(withDuration: 0.5) { [self] in
-            completeBox.alpha = 1
-            completeBox.isUserInteractionEnabled = true
-        }
-    }
-
-    // MARK: - EXIT ACTION
-
-    struct ExitAction {
-        let text: String
-        let confirmationRequired: Bool
-        let action: (UIViewController) -> Void
-    }
-
-    static let allActions: [ExitAction] = [
-        .init(text: NSLocalizedString("RELOAD_ICON_CACHE", comment: "Reload Icon Cache"),
-              confirmationRequired: !InterfaceBridge.enableQuickMode,
-              action: { controller in
-                  let alert = UIAlertController(title: "⚠️",
-                                                message: NSLocalizedString("RELOAD_ICON_CACHE_TASKES_TIME", comment: "Reloading home screen icons will take some time"),
-                                                preferredStyle: .alert)
-                  controller.present(alert, animated: true) {
-                      DispatchQueue.global().async {
-                          AuxiliaryExecuteWrapper.rootspawn(command: AuxiliaryExecuteWrapper.uicache,
-                                                            args: ["--all"],
-                                                            timeout: 120,
-                                                            output: { _ in })
-                          AuxiliaryExecuteWrapper.rootspawn(command: "exec-uicache",
-                                                            args: [],
-                                                            timeout: 120,
-                                                            output: { _ in })
-                          DispatchQueue.main.async {
-                              alert.dismiss(animated: true, completion: nil)
-                          }
-                      }
-                  }
-              }),
-        .init(text: NSLocalizedString("RELOAD_HOMESCREEN", comment: "Reload Home Screen"),
-              confirmationRequired: !InterfaceBridge.enableQuickMode,
-              action: { controller in
-                  // does here need animation?
-                  controller.dismiss(animated: true, completion: {
-                      AuxiliaryExecuteWrapper.reloadSpringboard()
-               })
-              }),
-        .init(text: NSLocalizedString("CLOSE", comment: "Close"),
-              confirmationRequired: false,
-              action: { controller in
-                  controller.dismiss(animated: true, completion: nil)
-              }),
-    ]
 
     @objc
     func exitButtonClicked() {
@@ -213,24 +162,5 @@ class OperationConsoleController: UIViewController {
             })
             return
         }
-        let dropDown = DropDown(anchorView: dropDownAnchor)
-        let actions = OperationConsoleController.allActions
-        dropDown.dataSource = actions
-            .map(\.text)
-
-            .invisibleSpacePadding()
-        dropDown.selectionAction = { [self] (index: Int, _: String) in
-            guard index >= 0, index < actions.count else { return }
-            let action = actions[index]
-            if action.confirmationRequired {
-                let dropDown = DropDown(anchorView: dropDownAnchor)
-                dropDown.dataSource = ["⁠\u{200b}   \(action.text)⁠   \u{200b}"]
-                dropDown.selectionAction = { _, _ in action.action(self) }
-                dropDown.show(onTopOf: view.window)
-            } else {
-                action.action(self)
-            }
-        }
-        dropDown.show(onTopOf: view.window)
     }
 }
