@@ -205,6 +205,9 @@
 /* Execute */
 "EXECUTE" = "注销";
 
+/* Open in Filza */
+"OPEN_IN_FILZA" = "打开Filza";
+
 /* Failed to create operation payload, incomplete download or broken resources. Please try again later. */
 "FAILED_TO_CREATE_PAYLOAD_MAYBE_DOWNLOAD_FAILED" = "无法创建操作数据，下载未完成或数据已损坏。请稍后再试。";
 
@@ -488,7 +491,7 @@
 "SHARE" = "分享";
 
 /* Sign Out */
-"SIGN_OUT" = "注销";
+"SIGN_OUT" = "登出";
 
 /* Signin Failed */
 "SIGNIN_FAILED" = "登录失败";
