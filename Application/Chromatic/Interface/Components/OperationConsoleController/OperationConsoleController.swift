@@ -128,9 +128,7 @@ class OperationConsoleController: UIViewController {
             }
 
             DispatchQueue.main.async {
-                controller.dismiss(animated: true, completion: {
-                      AuxiliaryExecuteWrapper.reloadSpringboard()
-                })
+                AuxiliaryExecuteWrapper.reloadSpringboard()
             }
         }
     }
