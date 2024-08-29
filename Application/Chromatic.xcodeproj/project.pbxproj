@@ -68,7 +68,6 @@
 		504678D826F3399600C4122A /* ExpandedWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504678D726F3399600C4122A /* ExpandedWebView.swift */; };
 		50527FFC26CFF6A600FD846D /* FluentIcon in Frameworks */ = {isa = PBXBuildFile; productRef = 50527FFB26CFF6A600FD846D /* FluentIcon */; };
 		50534ABE294310B700EED01F /* PlatformSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 50534ABD294310B700EED01F /* PlatformSetup.m */; };
-		505BB6CD26D78235007F5B15 /* Renet in Frameworks */ = {isa = PBXBuildFile; productRef = 505BB6CC26D78235007F5B15 /* Renet */; };
 		505E17AE26EE59AB00F32B88 /* IBPackageCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E17AD26EE59AB00F32B88 /* IBPackageCollection.swift */; };
 		506E837D26BFC4E700C6C16E /* LXSplitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506E837C26BFC4E700C6C16E /* LXSplitController.swift */; };
 		506E837F26BFC6CF00C6C16E /* LXSplitPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506E837E26BFC6CF00C6C16E /* LXSplitPanelController.swift */; };
@@ -339,7 +338,6 @@
 				508AF3F426CB8F66000A2EC6 /* JsonDepiction in Frameworks */,
 				500D83AA26C2158600D9E701 /* SPIndicator in Frameworks */,
 				507D1E7F26BFA89800E72E9B /* MorphingLabel in Frameworks */,
-				505BB6CD26D78235007F5B15 /* Renet in Frameworks */,
 				500D83A626C2157E00D9E701 /* FLAnimatedImage in Frameworks */,
 				507D1E7326BFA87D00E72E9B /* SwiftThrottle in Frameworks */,
 				50CF5829276049A8003AA45B /* AuxiliaryExecute in Frameworks */,
@@ -849,7 +847,6 @@
 				50527FFB26CFF6A600FD846D /* FluentIcon */,
 				50CFB01826D2671600E66AB9 /* Digger */,
 				50A283EE26D54492005FA2DB /* SwiftMD5 */,
-				505BB6CC26D78235007F5B15 /* Renet */,
 				50435E9526DBD35100D3ED25 /* Bugsnag */,
 				50CF5828276049A8003AA45B /* AuxiliaryExecute */,
 				50940CA127C618D400075B48 /* PathListTableViewController */,
@@ -1339,10 +1336,6 @@
 		50527FFB26CFF6A600FD846D /* FluentIcon */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FluentIcon;
-		};
-		505BB6CC26D78235007F5B15 /* Renet */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Renet;
 		};
 		507D1E7226BFA87D00E72E9B /* SwiftThrottle */ = {
 			isa = XCSwiftPackageProductDependency;

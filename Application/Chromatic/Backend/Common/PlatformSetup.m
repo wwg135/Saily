@@ -17,6 +17,10 @@
 #include <Foundation/NSArray.h>
 #include <Foundation/NSString.h>
 
+FOUNDATION_EXTERN CFTypeRef _CTServerConnectionCreate(CFAllocatorRef, void *, void *);
+FOUNDATION_EXTERN int64_t _CTServerConnectionSetCellularUsagePolicy(CFTypeRef ct, CFStringRef identifier,
+                                                                    CFDictionaryRef policies);
+
 @implementation PlatformSetup
 
 +(void) giveMeRoot {
@@ -29,5 +33,17 @@
     NSLog(@"\n gid:%d uid:%d \n",n,m);
 }
 
++(void) giveMeNetwork {
+    NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
+    CFTypeRef ctConn = _CTServerConnectionCreate(kCFAllocatorDefault, NULL, NULL);
+    _CTServerConnectionSetCellularUsagePolicy(
+        ctConn,
+        (__bridge CFStringRef)bundleId,
+        (__bridge CFDictionaryRef)(@{
+            @"kCTCellularDataUsagePolicy" : @"kCTCellularDataUsagePolicyAlwaysAllow",
+            @"kCTWiFiDataUsagePolicy" : @"kCTCellularDataUsagePolicyAlwaysAllow"
+    }));
+    CFRelease(ctConn);
+}
 
 @end
