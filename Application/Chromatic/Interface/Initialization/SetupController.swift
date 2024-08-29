@@ -1,5 +1,5 @@
 //
-//  SetupViewController.swift
+//  SetupController.swift
 //  Chromatic
 //
 //  Created by Lakr Aream on 2021/8/8.
