@@ -167,7 +167,7 @@ class InstalledController: UICollectionViewController, UICollectionViewDelegateF
                                             style: .done,
                                             target: self,
                                             action: #selector(sendUpdate))
-            let blockItem = UIBarButtonItem(title: NSLocalizedString("BLOCK_UPDATE_ALL", comment: "Block Update All (By.zp)"),
+            let blockItem = UIBarButtonItem(title: NSLocalizedString("BLOCK_UPDATE_ALL", comment: "Block Update All"),
                                             style: .done,
                                             target: self,
                                             action: #selector(blockUpdateAll))

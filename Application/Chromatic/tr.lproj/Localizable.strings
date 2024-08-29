@@ -46,7 +46,7 @@
 /* Block Update */
 "BLOCK_UPDATE" = "Güncellemeleri engelle";
 
-/* Block Update All (By.zp) */
+/* Block Update All */
 "BLOCK_UPDATE_ALL" = "Tüm güncellemeleri engelle";
 
 /* Broken Repo Removed */
@@ -241,7 +241,7 @@
 /* Install */
 "INSTALL" = "Kur";
 
-/* Install All (By.zp) */
+/* Install All */
 "INSTALL_ALL" = "Hepsini yükle";
 
 /* Installation Info Refreshed */

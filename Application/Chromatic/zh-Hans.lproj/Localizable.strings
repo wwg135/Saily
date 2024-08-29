@@ -46,8 +46,8 @@
 /* Block Update */
 "BLOCK_UPDATE" = "屏蔽更新";
 
-/* Block Update All (By.zp) */
-"BLOCK_UPDATE_ALL" = "更新退散 (By.真皮)";
+/* Block Update All */
+"BLOCK_UPDATE_ALL" = "屏蔽所有更新";
 
 /* Broken Repo Removed */
 "BROKEN_REPO_REMOVED" = "已清理破损软件源";
@@ -241,8 +241,8 @@
 /* Install */
 "INSTALL" = "安装";
 
-/* Install All (By.zp) */
-"INSTALL_ALL" = "我全要 (By.真皮)";
+/* Install All */
+"INSTALL_ALL" = "全部安装";
 
 /* Installation Info Refreshed */
 "INSTALLATION_INFO_REFRESHED" = "本地安装信息已刷新";
