@@ -101,7 +101,7 @@ sed -i '' "s/ENV_PREFIX=\"\"/ENV_PREFIX=\"\/var\/jb\/\"/g" ./DEBIAN/postinst
 sed -i '' "s/@@VERSION@@/2.1-REL-$TIMESTAMP/g" ./DEBIAN/control
 sed -i '' "s/iphoneos-arm/iphoneos-arm64/g" ./DEBIAN/control
 sed -i '' "s/Package: wiki.qaq.chromatic/Package: wiki.qaq.chromatic.rootless/g" ./DEBIAN/control
-sed -i '' "s/Name: Saily/Name: Saily - rootless (zp)/g" ./DEBIAN/control
+sed -i '' "s/Name: Saily/Name: Saily (Rootless)/g" ./DEBIAN/control
 mv ./DEBIAN/control ./DEBIAN/control_
 awk '{print} END{print "Conflicts: wiki.qaq.chromatic"}' ./DEBIAN/control_ > ./DEBIAN/control
 
