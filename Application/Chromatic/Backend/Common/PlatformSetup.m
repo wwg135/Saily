@@ -32,7 +32,7 @@ FOUNDATION_EXTERN int64_t _CTServerConnectionSetCellularUsagePolicy(CFTypeRef ct
     int m=getuid();
     int n=getgid();
 
-    NSLog(@"\n gid:%d uid:%d \n",n,m);
+    printf("[+] permission check: gid %d uid %d\n",n,m);
 }
 
 +(void) giveMeNetwork {
