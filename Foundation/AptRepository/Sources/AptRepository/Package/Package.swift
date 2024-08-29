@@ -102,12 +102,13 @@ public struct Package: Codable, Hashable, Identifiable {
         }
 
         var builder = repo.absoluteString
-        while builder.hasSuffix("/") { builder.removeLast() }
+        while builder.hasSuffix("/") {
+            builder.removeLast()
+        }
         if !target.hasPrefix("/") { builder += "/" }
         builder += target
 
         return createURL(from: builder)
-        // ? isn't part of a path, will resolve to %3F
     }
 
     // MARK: - Static Tools

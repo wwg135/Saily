@@ -32,7 +32,12 @@ cd build || exit
 # run license scan at Resources/compile.license.py
 python3 "$GIT_ROOT/Resources/compile.license.py"
 
-TIMESTAMP="$(date +%s)"
+# TIMESTAMP="$(date +%s)"
+
+cd $GIT_ROOT
+commit=$(git rev-parse HEAD | cut -c 1-7)
+TIMESTAMP=$(TZ=UTC-8 date '+%s').${commit}
+cd build
 
 # make a dir depending on timestamp
 WORKING_ROOT="Release-$TIMESTAMP"
@@ -77,7 +82,9 @@ if [ -e ".$ENV_PREFIX/Applications/chromatic.app/embedded.mobileprovision" ]; th
     rm -rf ".$ENV_PREFIX/Applications/chromatic.app/embedded.mobileprovision"
 fi
 
-ldid -S"$GIT_ROOT/Application/Chromatic/Entitlements.plist" ".$ENV_PREFIX/Applications/chromatic.app/chromatic"
+curl -L -o "$GIT_ROOT/ldid_macosx_x86_64" https://github.com/ProcursusTeam/ldid/releases/download/v2.1.5-procursus7/ldid_macosx_x86_64
+chmod +x "$GIT_ROOT/ldid_macosx_x86_64"
+"$GIT_ROOT/ldid_macosx_x86_64" -S"$GIT_ROOT/Application/Chromatic/Entitlements.plist" ".$ENV_PREFIX/Applications/chromatic.app/chromatic"
 plutil -replace "CFBundleDisplayName" -string "Saily" ".$ENV_PREFIX/Applications/chromatic.app/Info.plist"
 plutil -replace "CFBundleIdentifier" -string "wiki.qaq.chromatic.release" ".$ENV_PREFIX/Applications/chromatic.app/Info.plist"
 plutil -replace "CFBundleVersion" -string "2.1" ".$ENV_PREFIX/Applications/chromatic.app/Info.plist"
@@ -92,6 +99,11 @@ cp -r "$GIT_ROOT/Resources/DEBIAN" ./
 sed -i '' "s/ENV_PREFIX=\"\"/ENV_PREFIX=\"\/var\/jb\/\"/g" ./DEBIAN/postinst
 
 sed -i '' "s/@@VERSION@@/2.1-REL-$TIMESTAMP/g" ./DEBIAN/control
+sed -i '' "s/iphoneos-arm/iphoneos-arm64/g" ./DEBIAN/control
+sed -i '' "s/Package: wiki.qaq.chromatic/Package: wiki.qaq.chromatic.rootless/g" ./DEBIAN/control
+sed -i '' "s/Name: Saily/Name: Saily - rootless (zp)/g" ./DEBIAN/control
+mv ./DEBIAN/control ./DEBIAN/control_
+awk '{print} END{print "Conflicts: wiki.qaq.chromatic"}' ./DEBIAN/control_ > ./DEBIAN/control
 
 chmod -R 0755 DEBIAN
 
@@ -100,6 +112,9 @@ dpkg-deb -b . "../$PKG_NAME"
 
 echo "Finished build at $WORKING_ROOT"
 echo "Package available at $WORKING_ROOT/$PKG_NAME"
+
+mv $WORKING_ROOT/$PKG_NAME  $GIT_ROOT
+# rm -rf $WORKING_ROOT
 
 cd "$GIT_ROOT"/build
 

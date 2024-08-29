@@ -31,10 +31,11 @@ extension SettingView {
         let backgroundView = UIView()
         backgroundView.backgroundColor = UIColor(named: "CARD_BACKGROUND")
         backgroundView.layer.cornerRadius = 12
-//        backgroundView.dropShadow()
+        //        backgroundView.dropShadow()
         let enableShareSheet = SettingElement(iconSystemNamed: "square.and.arrow.up.on.square.fill",
                                               text: NSLocalizedString("ENABLE_SHARE_SHEET", comment: "Enable Share Sheet"),
-                                              dataType: .switcher) {
+                                              dataType: .switcher)
+        {
             InterfaceBridge.enableShareSheet ? "YES" : "NO"
         } withAction: { changeValueTo, _ in
             if changeValueTo ?? false {
@@ -57,17 +58,35 @@ extension SettingView {
                 self.dispatchValueUpdate()
             }
         }
+
+        let enableQuickMode = SettingElement(iconSystemNamed: "hare",
+                                             text: NSLocalizedString("ENABLE_QUICK_MODE", comment: "Enable Quick Mode"),
+                                             dataType: .switcher)
+        {
+            InterfaceBridge.enableQuickMode ? "YES" : "NO"
+        } withAction: { changeValueTo, _ in
+            if changeValueTo ?? false {
+                InterfaceBridge.enableQuickMode = true
+                self.dispatchValueUpdate()
+            } else {
+                InterfaceBridge.enableQuickMode = false
+                self.dispatchValueUpdate()
+            }
+        }
+
         #if DEBUG
             let crashApp = SettingElement(iconSystemNamed: "xmark.octagon.fill",
                                           text: "EXEC_BAD_ACCESS",
-                                          dataType: .submenuWithAction, initData: nil) { _, _ in
+                                          dataType: .submenuWithAction, initData: nil)
+            { _, _ in
                 fatalError("simulated application crash by user", file: #file, line: #line)
             }
         #endif
         let doUicache = SettingElement(iconSystemNamed: "square.grid.2x2",
                                        text: NSLocalizedString("REBUILD_ICONS", comment: "Rebuild Icons"),
                                        dataType: .submenuWithAction,
-                                       initData: nil) { _, anchor in
+                                       initData: nil)
+        { _, anchor in
             self.dropDownConfirm(anchor: anchor,
                                  text: NSLocalizedString("REBUILD_ICONS", comment: "Rebuild Icons"))
             { [weak self] in
@@ -94,7 +113,8 @@ extension SettingView {
         let doRespring = SettingElement(iconSystemNamed: "rays",
                                         text: NSLocalizedString("RELOAD_DESKTOP", comment: "Reload Desktop"),
                                         dataType: .submenuWithAction,
-                                        initData: nil) { _, anchor in
+                                        initData: nil)
+        { _, anchor in
             self.dropDownConfirm(anchor: anchor,
                                  text: NSLocalizedString("RELOAD_DESKTOP", comment: "Reload Desktop"))
             {
@@ -106,7 +126,8 @@ extension SettingView {
         let safemode = SettingElement(iconSystemNamed: "shield",
                                       text: NSLocalizedString("ENTER_SAFE_MODE", comment: "Enter Safe Mode"),
                                       dataType: .submenuWithAction,
-                                      initData: nil) { _, anchor in
+                                      initData: nil)
+        { _, anchor in
             self.dropDownConfirm(anchor: anchor,
                                  text: NSLocalizedString("ENTER_SAFE_MODE", comment: "Enter Safe Mode"))
             {
@@ -114,26 +135,81 @@ extension SettingView {
                 sleep(1)
                 AuxiliaryExecuteWrapper.rootspawn(command: AuxiliaryExecuteWrapper.killall,
                                                   args: ["-SEGV", "SpringBoard"],
-                                                  timeout: 1) { _ in
+                                                  timeout: 1)
+                { _ in
                 }
+            }
+        }
+        let doUicacheQuick = SettingElement(iconSystemNamed: "square.grid.2x2",
+                                            text: NSLocalizedString("REBUILD_ICONS", comment: "Rebuild Icons"),
+                                            dataType: .submenuWithAction,
+                                            initData: nil)
+        { _, _ in
+            let alert = UIAlertController(title: "⚠️",
+                                          message: NSLocalizedString("RELOAD_ICON_CACHE_TASKES_TIME", comment: "Reloading home screen icons will take some time"),
+                                          preferredStyle: .alert)
+            self.parentViewController?.present(alert, animated: true) {
+                DispatchQueue.global().async {
+                    AuxiliaryExecuteWrapper.rootspawn(command: AuxiliaryExecuteWrapper.uicache,
+                                                      args: ["--all"],
+                                                      timeout: 120,
+                                                      output: { _ in })
+                    AuxiliaryExecuteWrapper.rootspawn(command: "exec-uicache",
+                                                      args: [],
+                                                      timeout: 120,
+                                                      output: { _ in })
+                    DispatchQueue.main.async {
+                        alert.dismiss(animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+        let doRespringQuick = SettingElement(iconSystemNamed: "rays",
+                                             text: NSLocalizedString("RELOAD_DESKTOP", comment: "Reload Desktop"),
+                                             dataType: .submenuWithAction,
+                                             initData: nil)
+        { _, _ in
+            UIApplication.prepareForExitAndSuspend()
+            sleep(1)
+            AuxiliaryExecuteWrapper.reloadSpringboard()
+        }
+        let safemodeQuick = SettingElement(iconSystemNamed: "shield",
+                                           text: NSLocalizedString("ENTER_SAFE_MODE", comment: "Enter Safe Mode"),
+                                           dataType: .submenuWithAction,
+                                           initData: nil)
+        { _, _ in
+            UIApplication.prepareForExitAndSuspend()
+            sleep(1)
+            AuxiliaryExecuteWrapper.rootspawn(command: AuxiliaryExecuteWrapper.killall,
+                                              args: ["-SEGV", "SpringBoard"],
+                                              timeout: 1)
+            { _ in
             }
         }
         let sourceCode = SettingElement(iconSystemNamed: "chevron.left.slash.chevron.right",
                                         text: NSLocalizedString("SOURCE_CODE", comment: "Source Code"),
                                         dataType: .submenuWithAction,
-                                        initData: nil) { _, _ in
+                                        initData: nil)
+        { _, _ in
             UIApplication.shared.open(URL(string: cWebLocationSource)!,
                                       options: [:],
                                       completionHandler: nil)
         }
         addSubview(backgroundView)
         addSubview(enableShareSheet)
+        addSubview(enableQuickMode)
         #if DEBUG
             addSubview(crashApp)
         #endif
-        addSubview(doUicache)
-        addSubview(safemode)
-        addSubview(doRespring)
+        if InterfaceBridge.enableQuickMode {
+            addSubview(doUicacheQuick)
+            addSubview(doRespringQuick)
+            addSubview(safemodeQuick)
+        } else {
+            addSubview(doUicache)
+            addSubview(doRespring)
+            addSubview(safemode)
+        }
         addSubview(sourceCode)
         enableShareSheet.snp.makeConstraints { x in
             x.left.equalTo(safeAnchor.snp.left).offset(8)
@@ -142,6 +218,13 @@ extension SettingView {
             x.height.equalTo(28)
         }
         anchor = enableShareSheet
+        enableQuickMode.snp.makeConstraints { x in
+            x.left.equalTo(safeAnchor.snp.left).offset(8)
+            x.right.equalTo(safeAnchor.snp.right).offset(-8)
+            x.top.equalTo(anchor.snp.bottom).offset(18)
+            x.height.equalTo(28)
+        }
+        anchor = enableQuickMode
         #if DEBUG
             crashApp.snp.makeConstraints { x in
                 x.left.equalTo(safeAnchor.snp.left).offset(8)
@@ -151,27 +234,51 @@ extension SettingView {
             }
             anchor = crashApp
         #endif
-        doUicache.snp.makeConstraints { x in
-            x.left.equalTo(safeAnchor.snp.left).offset(8)
-            x.right.equalTo(safeAnchor.snp.right).offset(-8)
-            x.top.equalTo(anchor.snp.bottom).offset(18)
-            x.height.equalTo(28)
+        if InterfaceBridge.enableQuickMode {
+            doUicacheQuick.snp.makeConstraints { x in
+                x.left.equalTo(safeAnchor.snp.left).offset(8)
+                x.right.equalTo(safeAnchor.snp.right).offset(-8)
+                x.top.equalTo(anchor.snp.bottom).offset(18)
+                x.height.equalTo(28)
+            }
+            anchor = doUicacheQuick
+            doRespringQuick.snp.makeConstraints { x in
+                x.left.equalTo(safeAnchor.snp.left).offset(8)
+                x.right.equalTo(safeAnchor.snp.right).offset(-8)
+                x.top.equalTo(anchor.snp.bottom).offset(18)
+                x.height.equalTo(28)
+            }
+            anchor = doRespringQuick
+            safemodeQuick.snp.makeConstraints { x in
+                x.left.equalTo(safeAnchor.snp.left).offset(8)
+                x.right.equalTo(safeAnchor.snp.right).offset(-8)
+                x.top.equalTo(anchor.snp.bottom).offset(18)
+                x.height.equalTo(28)
+            }
+            anchor = safemodeQuick
+        } else {
+            doUicache.snp.makeConstraints { x in
+                x.left.equalTo(safeAnchor.snp.left).offset(8)
+                x.right.equalTo(safeAnchor.snp.right).offset(-8)
+                x.top.equalTo(anchor.snp.bottom).offset(18)
+                x.height.equalTo(28)
+            }
+            anchor = doUicache
+            doRespring.snp.makeConstraints { x in
+                x.left.equalTo(safeAnchor.snp.left).offset(8)
+                x.right.equalTo(safeAnchor.snp.right).offset(-8)
+                x.top.equalTo(anchor.snp.bottom).offset(18)
+                x.height.equalTo(28)
+            }
+            anchor = doRespring
+            safemode.snp.makeConstraints { x in
+                x.left.equalTo(safeAnchor.snp.left).offset(8)
+                x.right.equalTo(safeAnchor.snp.right).offset(-8)
+                x.top.equalTo(anchor.snp.bottom).offset(18)
+                x.height.equalTo(28)
+            }
+            anchor = safemode
         }
-        anchor = doUicache
-        doRespring.snp.makeConstraints { x in
-            x.left.equalTo(safeAnchor.snp.left).offset(8)
-            x.right.equalTo(safeAnchor.snp.right).offset(-8)
-            x.top.equalTo(anchor.snp.bottom).offset(18)
-            x.height.equalTo(28)
-        }
-        anchor = doRespring
-        safemode.snp.makeConstraints { x in
-            x.left.equalTo(safeAnchor.snp.left).offset(8)
-            x.right.equalTo(safeAnchor.snp.right).offset(-8)
-            x.top.equalTo(anchor.snp.bottom).offset(18)
-            x.height.equalTo(28)
-        }
-        anchor = safemode
         sourceCode.snp.makeConstraints { x in
             x.left.equalTo(safeAnchor.snp.left).offset(8)
             x.right.equalTo(safeAnchor.snp.right).offset(-8)

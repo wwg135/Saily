@@ -31,8 +31,8 @@ extension TaskManager {
             .obtainInstalledPackageList()
         let installedOriginalTable: [String: Package] = {
             var build = [String: Package]()
-            originalCopyInstalled.forEach {
-                build[$0.identity] = $0
+            for item in originalCopyInstalled {
+                build[item.identity] = item
             }
             return build
         }()
@@ -127,9 +127,9 @@ extension TaskManager {
                                     /*
                                      now we need to solve the problem if they are looping the dependency
                                      eg.
-                                        chariz-keyring is breaking package procursus-keyring 2020.05.09
+                                     chariz-keyring is breaking package procursus-keyring 2020.05.09
                                      while
-                                        procursus-keyring is processing update from 2020.05.09 to 2020.05.09-2
+                                     procursus-keyring is processing update from 2020.05.09 to 2020.05.09-2
                                      */
                                     for installElement in currentContextBuilder
                                         where installElement.identity == breakingElement.representPackage
@@ -192,12 +192,12 @@ extension TaskManager {
                 autoreleasepool {
                     // now let's sort our dependency group, choose the minimal installation solution
                     /*
-                      eg:
+                     eg:
 
-                      org.coolstar.sileo (>= 2.1) | xyz.willy.zebra (>= 1.1.19) | me.apptapp.installer (>= 5.1) | cydia | openssh-server
+                     org.coolstar.sileo (>= 2.1) | xyz.willy.zebra (>= 1.1.19) | me.apptapp.installer (>= 5.1) | cydia | openssh-server
 
-                      installed cydia, then sort to
-                      cydia | ...
+                     installed cydia, then sort to
+                     cydia | ...
                      */
 
                     let dependencyGroups = dependGroupBuilder
@@ -219,11 +219,20 @@ extension TaskManager {
                     // after the sort, let's choose one by one
 
                     // this is a group, eg: aaa, bbb, ccc | ddd, eee, fff
-                    group: for eachDependency in dependencyGroups {
+                        group: for eachDependency in dependencyGroups
+                    {
                         // this is an element like [ccc | ddd]
                         // one of the element work, we break down the loop
                         debugPrint("resolving depend \(eachDependency.original)")
 
+                        // now let's sort our dependency in each dependency, choose the minimal installation solution
+                        /*
+                         eg:
+                         org.coolstar.sileo (>= 2.1) | xyz.willy.zebra (>= 1.1.19) | me.apptapp.installer (>= 5.1) | cydia | openssh-server
+
+                         installed cydia, then sort to
+                         cydia | ...
+                         */
                         let sortedDependencyGroups = eachDependency.elements
                             .sorted { elementA, elementB in
                                 let context = installContext.map(\.identity)
@@ -235,7 +244,8 @@ extension TaskManager {
                                 return a1 + a2 > b1 + b2
                             }
 
-                        inner: for eachElement in sortedDependencyGroups {
+                            inner: for eachElement in sortedDependencyGroups
+                        {
                             // can't put something to install while removing
                             if removing.contains(eachElement.representPackage) {
                                 // go search for next one
@@ -296,14 +306,15 @@ extension TaskManager {
                                         .map { ($0.latestVersion, $0) }
                                         .sorted {
                                             switch Package.compareVersion($0.0 ?? "", b: $1.0 ?? "") {
-                                            case .aIsBiggerThenB: return true // put a front
-                                            case .aIsEqualToB: return true // nvm
-                                            case .aIsSmallerThenB: return false // put a back
-                                            case .invalidParameter: return false // what?
+                                            case .aIsBiggerThenB: true // put a front
+                                            case .aIsEqualToB: true // nvm
+                                            case .aIsSmallerThenB: false // put a back
+                                            case .invalidParameter: false // what?
                                             }
                                         }
                                     // now, from top down
-                                    innerSearch: for element in availableVersions {
+                                        innerSearch: for element in availableVersions
+                                    {
                                         guard let version = element.0,
                                               Package.validateVersion(version)
                                         else {

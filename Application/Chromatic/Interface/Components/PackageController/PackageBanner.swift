@@ -24,7 +24,26 @@ class PackageBannerView: UIView {
     let buttonAnchor = UIView()
 
     init(package: Package) {
-        self.package = package
+        if package.identity == "" {
+            self.package = package
+        } else {
+            if let installInfo = PackageCenter
+                .default
+                .obtainPackageInstallationInfo(with: package.identity)
+            {
+                let updatePackages = PackageCenter
+                    .default
+                    .obtainUpdateForPackage(with: installInfo.identity,
+                                            version: installInfo.version)
+                if updatePackages.count > 0 {
+                    self.package = updatePackages[0]
+                } else {
+                    self.package = package
+                }
+            } else {
+                self.package = package
+            }
+        }
 
         super.init(frame: CGRect())
 
@@ -70,7 +89,14 @@ class PackageBannerView: UIView {
         button.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.gray, for: .highlighted)
-        button.addTarget(self, action: #selector(dropDownActionList), for: .touchUpInside)
+        // 安装增加长按菜单，短按就直接安装
+        if InterfaceBridge.enableQuickMode {
+            button.addTarget(self, action: #selector(dropDownActionListQuick), for: .touchUpInside)
+            let mLongClick = UILongPressGestureRecognizer(target: self, action: #selector(dropDownActionList)) // 事件对象
+            button.addGestureRecognizer(mLongClick)
+        } else {
+            button.addTarget(self, action: #selector(dropDownActionList), for: .touchUpInside)
+        }
         button.snp.makeConstraints { x in
             x.centerY.equalToSuperview()
             x.right.equalToSuperview().offset(-20)
@@ -135,11 +161,12 @@ class PackageBannerView: UIView {
                 .shared
                 .loadImage(with: iconUrl,
                            options: .highPriority,
-                           progress: nil) { [weak self] img, _, _, _, _, _ in
-                    if let img {
-                        self?.icon.image = img
-                    }
+                           progress: nil)
+            { [weak self] img, _, _, _, _, _ in
+                if let img {
+                    self?.icon.image = img
                 }
+            }
         }
     }
 
@@ -159,6 +186,15 @@ class PackageBannerView: UIView {
             }
             return NSLocalizedString("INSTALL", comment: "Install").uppercased()
         }
-        return NSLocalizedString("OPTION", comment: "Option").uppercased()
+        // 如果是已经安装的，需要看一下action里面的第一个是什么，可能是删除，也可能是更新
+        return getButtonStringFromActions() //  NSLocalizedString("OPTION", comment: "Option").uppercased()
+    }
+
+    func getButtonStringFromActions() -> String {
+        let actions = PackageMenuAction
+            .allMenuActions
+            .filter { $0.elegantForPerform(package) }
+        let action = actions[0]
+        return action.descriptor.describe()
     }
 }

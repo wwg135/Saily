@@ -34,6 +34,8 @@ python3 "$GIT_ROOT/Resources/compile.license.py"
 
 TIMESTAMP="$(date +%s)"
 
+echo "build_timestamp=$TIMESTAMP" >> "$GITHUB_ENV"
+
 # make a dir depending on timestamp
 WORKING_ROOT="Release-$TIMESTAMP"
 
@@ -86,14 +88,14 @@ plutil -replace "CFBundleShortVersionString" -string "$TIMESTAMP" ".$ENV_PREFIX/
 # copy scaned license into chromatic.app/licenses
 cp -r "$GIT_ROOT/build/License/ScannedLicense" ".$ENV_PREFIX/Applications/chromatic.app/Bundle/ScannedLicense"
 
-cp -r "$GIT_ROOT/Resources/DEBIAN" ./
+# cp -r "$GIT_ROOT/Resources/DEBIAN" ./
 
-sed -i '' "s/@@VERSION@@/2.1-REL-$TIMESTAMP/g" ./DEBIAN/control
+# sed -i '' "s/@@VERSION@@/2.1-REL-$TIMESTAMP/g" ./DEBIAN/control
 
-chmod -R 0755 DEBIAN
+# chmod -R 0755 DEBIAN
 
-PKG_NAME="chromatic.rel.ci.$TIMESTAMP.deb"
-dpkg-deb -b . "../$PKG_NAME"
+# PKG_NAME="chromatic.rel.ci.$TIMESTAMP.deb"
+# dpkg-deb -b . "../$PKG_NAME"
 
 cd ..
 mkdir -p BuildInstaller/Payload
@@ -107,7 +109,7 @@ IPA_LOCATION=$(realpath "$IPA_LOCATION")
 cd ..
 
 echo "Finished build at $WORKING_ROOT"
-echo "Package available at $WORKING_ROOT/$PKG_NAME"
+# echo "Package available at $WORKING_ROOT/$PKG_NAME"
 echo "Installer available at $IPA_LOCATION"
 
 cd "$GIT_ROOT"/build

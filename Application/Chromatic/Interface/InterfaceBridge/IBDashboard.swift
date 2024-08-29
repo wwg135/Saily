@@ -19,11 +19,11 @@ extension InterfaceBridge {
 
     static func dashbaordBuildDataSource() -> [DashboardDataSection] {
         var builder = [DashboardDataSection?]()
-        builder.append(buildCollections())
         builder.append(buildAvailableUpdate())
         builder.append(buildRecentUpdate())
         builder.append(buildRepoFeatured())
         builder.append(buildRecentInstall())
+        builder.append(buildCollections())
         return builder
             .compactMap { $0 }
             .filter { $0.package.count > 0 }
@@ -189,7 +189,8 @@ extension InterfaceBridge {
         }
         return DashboardDataSection(title: NSLocalizedString("RECENT_UPDATE", comment: "Recent Update"),
                                     package: builder,
-                                    shouldLimit: true) { controller in
+                                    shouldLimit: true)
+        { controller in
             var list = PackageCenter
                 .default
                 .obtainRecentUpdatedList()

@@ -1,5 +1,5 @@
 //
-//  TaskButton.swift
+//  IBTasks.swift
 //  Chromatic
 //
 //  Created by Lakr Aream on 2021/8/29.
@@ -120,6 +120,7 @@ extension InterfaceBridge {
         }
 
         func confirmOperations() {
+            // 这里的试运行要给他干掉，并且直接默认调用
             if TaskProcessor.shared.inProcessingQueue {
                 let alert = UIAlertController(title: "⚠️",
                                               message: NSLocalizedString("TASK_PROCESSOR_BUSY_PROCESSING_ANOTHER_JOB", comment: "Task processor is busy processing another job"),
@@ -166,7 +167,8 @@ extension InterfaceBridge {
                                           message: NSLocalizedString("ESSENTIAL_PACKAG_IN_REMOVE_QUEUE", comment: "Essential package in removal queue, this may brick your device."),
                                           preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("PROCEED", comment: "Proceed"),
-                                          style: .destructive) { _ in
+                                          style: .destructive)
+                { _ in
                     confirmOperations()
                 })
             alert.addAction(UIAlertAction(title: NSLocalizedString("CANCEL", comment: "Cancel"),

@@ -1,5 +1,5 @@
 //
-//  RepoManager.swift
+//  RepositoryCenter.swift
 //  Chromatic
 //
 //  Created by Lakr Aream on 2020/4/18.
@@ -11,23 +11,23 @@ import Foundation
 import PropertyWrapper
 import SwiftThrottle
 
-internal let kRepositoryCenterIdentity = "wiki.qaq.chromatic.RepositoryCenter"
+let kRepositoryCenterIdentity = "wiki.qaq.chromatic.RepositoryCenter"
 
 /// Repository Center is used to manage any software distribution sources
 public final class RepositoryCenter {
     public static let `default` = RepositoryCenter()
 
     /// used to generate download url for packages
-    public static let deviceArchitecture = "iphoneos-arm"
+    public static let deviceArchitecture = "iphoneos-arm64"
 
     /// persist engine will work inside this
     public let workingLocation: URL
 
     /// container accessing lock
-    internal var accessLock = NSLock()
+    var accessLock = NSLock()
 
     /// our repos
-    internal var container: [URL: Repository] = [:]
+    var container: [URL: Repository] = [:]
 
     /// store deleted repository
     @PropertiesWrapper(key: "\(kRepositoryCenterIdentity).historyRecordsEnabled", defaultValue: true)
@@ -53,20 +53,20 @@ public final class RepositoryCenter {
     public var smartUpdateTimeInterval: Int
 
     /// used for compile data and persist engine
-    internal let compilerThrottle = Throttle(minimumDelay: 5, queue: .global())
+    let compilerThrottle = Throttle(minimumDelay: 5, queue: .global())
     /// used to control update engine
-    internal let updateDispatchThrottle = Throttle(minimumDelay: 1, queue: .global())
+    let updateDispatchThrottle = Throttle(minimumDelay: 1, queue: .global())
     /// used to present notification to user interface
-    internal let notificationThrotte = Throttle(minimumDelay: 0.5, queue: .main)
+    let notificationThrotte = Throttle(minimumDelay: 0.5, queue: .main)
 
     /// notification name
     public static let registrationUpdate = Notification.Name("\(kRepositoryCenterIdentity).registrationUpdate")
     public static let metadataUpdate = Notification.Name("\(kRepositoryCenterIdentity).metadataUpdate")
 
     /// encoder
-    internal let persistEncoder: PropertyListEncoder = .init()
+    let persistEncoder: PropertyListEncoder = .init()
     /// decoder
-    internal let persistDecoder: PropertyListDecoder = .init()
+    let persistDecoder: PropertyListDecoder = .init()
 
     /// update engine
     @PropertiesWrapper(key: "\(kRepositoryCenterIdentity).updateConcurrencyLimit",
@@ -81,9 +81,9 @@ public final class RepositoryCenter {
     }
 
     /// update queue
-    internal var pendingUpdateRequest: Set<URL> = []
-    internal var currentlyInUpdate: Set<URL> = []
-    internal var currentUpdateProgress: [URL: Progress] = [:]
+    var pendingUpdateRequest: Set<URL> = []
+    var currentlyInUpdate: Set<URL> = []
+    var currentUpdateProgress: [URL: Progress] = [:]
 
     /// when updating repository property, set by application to user default, not here
     @PropertiesWrapper(key: "\(kRepositoryCenterIdentity).networkingHeaders", defaultValue: [:])
@@ -104,7 +104,7 @@ public final class RepositoryCenter {
     }
 
     /// must load after package center
-    internal init() {
+    init() {
         // MARK: - PRE SELF
 
         let storeDirPrefix = UserDefaults

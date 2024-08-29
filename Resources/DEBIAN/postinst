@@ -19,5 +19,5 @@ if [ -n "$chromaticAuxiliaryExec" ]; then
 fi
 
 echo "[*] reloading icon cache for springboard..."
-uicache -p "$APP_PATH"
+uicache -p "$(readlink -f $APP_PATH)"
 echo "[*] completed"

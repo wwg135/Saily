@@ -1,5 +1,5 @@
 //
-//  TaskManager+Load.swift
+//  TaskManager+AptApi.swift
 //  Chromatic
 //
 //  Created by Lakr Aream on 2021/8/21.
@@ -37,7 +37,7 @@ extension TaskManager {
         }
     }
 
-    private func resolveInstall(action: PackageAction) -> PackageResolutionResult {
+    func resolveInstall(action: PackageAction) -> PackageResolutionResult {
         var context = copyCurrentUserActions()
         context.append(action)
         return resolvePackageActions(context: context, dryRun: false)
@@ -160,7 +160,7 @@ extension TaskManager {
         // MARK: - step 4, commit if needed
 
         if !dryRun {
-            resolvedActions.forEach { action in
+            for action in resolvedActions {
                 Dog.shared.join(self,
                                 "\(action.action.rawValue) \(action.represent.identity) \(action.represent.latestVersion ?? "0.0.0.???") \(action.represent.repoRef?.absoluteString ?? "no repo") user required? \(action.isUserRequired)",
                                 level: .verbose)
@@ -216,6 +216,26 @@ extension TaskManager {
         switch commitResult {
         case .success(resolvedActions: _): return true
         default: return false
+        }
+    }
+
+    func blockUpdateEverything() {
+        PackageActionReport.shared.clear()
+        PackageActionReport.shared.openSession()
+        let installed = PackageCenter
+            .default
+            .obtainInstalledPackageList()
+        for item in installed {
+            guard let version = item.latestVersion else { continue }
+            let candidate = PackageCenter
+                .default
+                .obtainUpdateForPackage(with: item.identity,
+                                        version: version)
+                .compactMap { $0 }
+            guard let decision = PackageCenter
+                .default
+                .newestPackage(of: candidate) else { continue }
+            PackageCenter.default.blockedUpdateTable.append(decision.identity)
         }
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-internal extension Repository {
+extension Repository {
     /// Some well known repo for jailbroken devices
     /// This is a simple solution to those users adding them from url only
     mutating func applyNoneFlatWellKnownRepositoryIfNeeded() {
@@ -17,7 +17,7 @@ internal extension Repository {
             while magic > kCFCoreFoundationVersionNumber {
                 magic -= 100.0
             }
-            distribution = "iphoneos-arm64/\(Int(magic))"
+            distribution = "iphoneos-arm64-rootless/\(Int(magic))"
             component = "main"
             return
         case "apt.thebigboss.org", "apt.modmyi.com", "cydia.zodttd.com":
@@ -29,6 +29,14 @@ internal extension Repository {
             component = "main"
             return
         default:
+            if url.absoluteString.contains("procurs.us"), url.absoluteString.contains("do") {
+                var magic: Double = floor(kCFCoreFoundationVersionNumber / 100.0 + 0.5) * 100.0
+                while magic > kCFCoreFoundationVersionNumber {
+                    magic -= 100.0
+                }
+                distribution = "iphoneos-arm64-rootless/\(Int(magic))"
+                component = "main"
+            }
             return
         }
     }
