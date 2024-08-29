@@ -17,6 +17,8 @@
 #include <Foundation/NSArray.h>
 #include <Foundation/NSString.h>
 
+#include <TargetConditionals.h>
+
 FOUNDATION_EXTERN CFTypeRef _CTServerConnectionCreate(CFAllocatorRef, void *, void *);
 FOUNDATION_EXTERN int64_t _CTServerConnectionSetCellularUsagePolicy(CFTypeRef ct, CFStringRef identifier,
                                                                     CFDictionaryRef policies);
@@ -34,6 +36,7 @@ FOUNDATION_EXTERN int64_t _CTServerConnectionSetCellularUsagePolicy(CFTypeRef ct
 }
 
 +(void) giveMeNetwork {
+#if !TARGET_OS_SIMULATOR
     NSString *bundleId = [[NSBundle mainBundle] bundleIdentifier];
     CFTypeRef ctConn = _CTServerConnectionCreate(kCFAllocatorDefault, NULL, NULL);
     _CTServerConnectionSetCellularUsagePolicy(
@@ -44,6 +47,7 @@ FOUNDATION_EXTERN int64_t _CTServerConnectionSetCellularUsagePolicy(CFTypeRef ct
             @"kCTWiFiDataUsagePolicy" : @"kCTCellularDataUsagePolicyAlwaysAllow"
     }));
     CFRelease(ctConn);
+#endif
 }
 
 @end
