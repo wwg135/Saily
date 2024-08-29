@@ -4,8 +4,7 @@
 
 **You are currently in the main-rootless-3.0 branch.**
 
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/SailyTeam/Saily/pulls)  
-[![Crowdin](https://badges.crowdin.net/saily/localized.svg)](https://crwd.in/saily)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/SailyTeam/Saily/pulls)
 
 Saily is a modern APT package manager designed for jailbroken devices running iOS/iPadOS 15 and above, using the Dopamine jailbreak.
 
@@ -13,7 +12,6 @@ Saily is a modern APT package manager designed for jailbroken devices running iO
 
 ## Saily Features
 
-- [ ] i18n help wanted: [https://crwd.in/saily](https://crwd.in/saily)
 - [x] Unique UI for **both** iPhone and iPad
 - [x] Import all your repositories from Cydia, Sileo, Zebra, and Installer
 - [x] Add and manage repositories without limitation
