@@ -103,7 +103,7 @@ extension SettingView {
             alert.addTextField { field in
                 field.text = InterfaceBridge.mainUserAgent
                 if field.text?.count ?? 0 < 1 {
-                    field.text = "Saily/2.0 Cydia/1.1.32"
+                    field.text = "Saily/3.0 Cydia/1.1.32"
                 }
             }
             alert.addAction(UIAlertAction(title: NSLocalizedString("CANCEL", comment: "Cancel"),

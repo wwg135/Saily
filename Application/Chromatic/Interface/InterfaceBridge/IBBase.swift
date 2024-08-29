@@ -39,7 +39,7 @@ enum InterfaceBridge {
         }
     }
 
-    @PropertiesWrapper(key: "mainUserAgent", defaultValue: "Saily/2.0 Cydia/1.1.32")
+    @PropertiesWrapper(key: "mainUserAgent", defaultValue: "Saily/3.0 Cydia/1.1.32")
     public static var mainUserAgent: String
 }
 
