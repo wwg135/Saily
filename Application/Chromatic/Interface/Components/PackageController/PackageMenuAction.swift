@@ -109,7 +109,7 @@ class PackageMenuAction {
     struct MenuAction {
         let descriptor: ActionDescriptor
         let block: (Package, UIView) -> Void
-        let elegantForPerform: (Package) -> (Bool)
+        let eligibleForPerform: (Package) -> (Bool)
     }
 
     // MARK: - ACTIONS
@@ -265,7 +265,7 @@ class PackageMenuAction {
 
         .init(descriptor: .directInstall,
               block: resolveInstallRequest,
-              elegantForPerform: { package in
+              eligibleForPerform: { package in
                   if TaskManager
                       .shared
                       .isQueueContains(package: package.identity)
@@ -280,7 +280,7 @@ class PackageMenuAction {
 
         .init(descriptor: .install,
               block: resolveInstallRequest,
-              elegantForPerform: { package in
+              eligibleForPerform: { package in
                   if TaskManager
                       .shared
                       .isQueueContains(package: package.identity)
@@ -303,7 +303,7 @@ class PackageMenuAction {
 
         .init(descriptor: .update,
               block: resolveInstallRequest,
-              elegantForPerform: { package in
+              eligibleForPerform: { package in
                   if TaskManager.shared.isQueueContains(package: package.identity) { return false }
                   if package.obtainDownloadLink() == PackageBadUrl {
                       return false
@@ -340,7 +340,7 @@ class PackageMenuAction {
 
         .init(descriptor: .reinstall,
               block: resolveInstallRequest,
-              elegantForPerform: { package in
+              eligibleForPerform: { package in
                   if package.obtainDownloadLink() == PackageBadUrl {
                       return false
                   }
@@ -358,7 +358,7 @@ class PackageMenuAction {
 
         .init(descriptor: .downgrade,
               block: resolveInstallRequest,
-              elegantForPerform: { package in
+              eligibleForPerform: { package in
                   if TaskManager.shared.isQueueContains(package: package.identity) { return false }
                   if package.obtainDownloadLink() == PackageBadUrl {
                       return false
@@ -387,7 +387,7 @@ class PackageMenuAction {
                       resolveAction(result: result, view: view)
                   }
               },
-              elegantForPerform: { package in
+              eligibleForPerform: { package in
                   if TaskManager.shared.isQueueContains(package: package.identity) { return false }
                   return PackageCenter
                       .default
@@ -404,7 +404,7 @@ class PackageMenuAction {
                       .cancelActionWithPackage(identity: package.identity)
                   resolveAction(result: result, view: view)
               },
-              elegantForPerform: {
+              eligibleForPerform: {
                   TaskManager.shared.isQueueContainsUserRequest(package: $0.identity)
               }),
 
@@ -416,7 +416,7 @@ class PackageMenuAction {
                   target.currentPackage = package
                   view.parentViewController?.present(next: target)
               },
-              elegantForPerform: { _ in true }),
+              eligibleForPerform: { _ in true }),
 
         // MARK: - UPDATE CONTROL
 
@@ -428,7 +428,7 @@ class PackageMenuAction {
                                 haptic: .success,
                                 from: .top,
                                 completion: nil)
-        }, elegantForPerform: { package in
+        }, eligibleForPerform: { package in
             !PackageCenter.default.blockedUpdateTable.contains(package.identity)
         }),
 
@@ -440,7 +440,7 @@ class PackageMenuAction {
                                 haptic: .success,
                                 from: .top,
                                 completion: nil)
-        }, elegantForPerform: { package in
+        }, eligibleForPerform: { package in
             PackageCenter.default.blockedUpdateTable.contains(package.identity)
         }),
 
@@ -454,7 +454,7 @@ class PackageMenuAction {
                 .window?
                 .topMostViewController?
                 .present(target, animated: true, completion: nil)
-        }, elegantForPerform: { package in
+        }, eligibleForPerform: { package in
             if let tag = package.latestMetadata?["tag"],
                tag.contains("cydia::commercial")
             {
@@ -489,7 +489,7 @@ class PackageMenuAction {
                                 haptic: .success,
                                 from: .top,
                                 completion: nil)
-        }, elegantForPerform: { package in
+        }, eligibleForPerform: { package in
             !InterfaceBridge
                 .collectedPackages
                 .map(\.identity)
@@ -513,7 +513,7 @@ class PackageMenuAction {
                                 haptic: .success,
                                 from: .top,
                                 completion: nil)
-        }, elegantForPerform: { package in
+        }, eligibleForPerform: { package in
             InterfaceBridge
                 .collectedPackages
                 .map(\.identity)
@@ -530,7 +530,7 @@ class PackageMenuAction {
                                 haptic: .success,
                                 from: .top,
                                 completion: nil)
-        }, elegantForPerform: { package in
+        }, eligibleForPerform: { package in
             InterfaceBridge
                 .collectedPackages
                 .map(\.identity)
@@ -562,7 +562,7 @@ class PackageMenuAction {
                                     from: .top,
                                     completion: nil)
             }
-        }, elegantForPerform: { _ in true }),
+        }, eligibleForPerform: { _ in true }),
 
         // MARK: - REVEAL FILES
 
@@ -590,7 +590,7 @@ class PackageMenuAction {
                 .topMostViewController?
                 .present(next: controller)
         },
-        elegantForPerform: { package in
+        eligibleForPerform: { package in
             FileManager
                 .default
                 .fileExists(atPath: "/Library/dpkg/info/\(package.identity).list")

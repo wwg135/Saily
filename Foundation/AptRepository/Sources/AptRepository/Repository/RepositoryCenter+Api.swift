@@ -95,7 +95,7 @@ public extension RepositoryCenter {
         if repo.metaPackage.count < 1 || repo.metaRelease.count < 1 {
             return false
         }
-        if repositoryElegantForSmartUpdate(target: repo) {
+        if repositoryeligibleForSmartUpdate(target: repo) {
             return false
         }
         return true
@@ -194,7 +194,7 @@ public extension RepositoryCenter {
         accessLock.lock()
         container
             .values
-            .filter { repositoryElegantForSmartUpdate(target: $0) }
+            .filter { repositoryeligibleForSmartUpdate(target: $0) }
             .filter { !currentlyInUpdate.contains($0.url) }
             .map(\.url)
             .forEach {

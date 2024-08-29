@@ -70,7 +70,7 @@ extension InterfaceBridge {
         } actionProvider: { _ in
             let actions = PackageMenuAction
                 .allMenuActions
-                .filter { $0.elegantForPerform(package) }
+                .filter { $0.eligibleForPerform(package) }
                 .map { action in
                     UIAction(
                         title: action.descriptor.describe(),

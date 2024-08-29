@@ -57,7 +57,7 @@ extension PackageBannerView {
     func obtainValidatedBannerActions() -> [PackageMenuAction.MenuAction] {
         PackageMenuAction
             .allMenuActions
-            .filter { $0.elegantForPerform(package) }
+            .filter { $0.eligibleForPerform(package) }
     }
 
     func obtainDropDownLabels(actions: [PackageMenuAction.MenuAction]) -> [String] {

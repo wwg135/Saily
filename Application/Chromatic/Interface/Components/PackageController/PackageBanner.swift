@@ -193,7 +193,7 @@ class PackageBannerView: UIView {
     func getButtonStringFromActions() -> String {
         let actions = PackageMenuAction
             .allMenuActions
-            .filter { $0.elegantForPerform(package) }
+            .filter { $0.eligibleForPerform(package) }
         let action = actions[0]
         return action.descriptor.describe()
     }

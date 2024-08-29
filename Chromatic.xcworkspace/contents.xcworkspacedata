@@ -62,9 +62,6 @@
       location = "group:Foundation/SDWebImage">
    </FileRef>
    <FileRef
-      location = "group:Foundation/SGRenet">
-   </FileRef>
-   <FileRef
       location = "group:Foundation/SnapKit">
    </FileRef>
    <FileRef

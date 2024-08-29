@@ -77,10 +77,10 @@ extension RepositoryCenter {
 
     // MARK: - UPDATE ENGINE
 
-    /// if any part of the repo outdated then it's elegant for it
+    /// if any part of the repo outdated then it's eligible for it
     /// - Parameter target: the target repository
-    /// - Returns: if it is elegant
-    func repositoryElegantForSmartUpdate(target: Repository) -> Bool {
+    /// - Returns: if it is eligible
+    func repositoryeligibleForSmartUpdate(target: Repository) -> Bool {
         let interval = Double(smartUpdateTimeInterval)
         let current = Date()
         if current.timeIntervalSince(target.lastUpdateRelease) > interval {

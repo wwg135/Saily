@@ -73,7 +73,7 @@ class RepoAddViewController: UIViewController {
             // Cydia
             let cydiaRecord = try? FileManager
                 .default
-                .contentsOfDirectory(atPath: "/etc/apt/sources.list.d/")
+                .contentsOfDirectory(atPath: "/var/jb/etc/apt/sources.list.d/")
             for item in cydiaRecord ?? [] {
                 if let read = try? String(contentsOfFile: "/etc/apt/sources.list.d/" + item) {
                     for line in read.components(separatedBy: "\n") {
@@ -86,7 +86,7 @@ class RepoAddViewController: UIViewController {
                 }
             }
             // Sileo
-            let sileoSearchPath = "/etc/apt/sileo.list.d/"
+            let sileoSearchPath = "/var/jb/etc/apt/sileo.list.d/"
             let sileoRecord = try? FileManager
                 .default
                 .contentsOfDirectory(atPath: sileoSearchPath)
