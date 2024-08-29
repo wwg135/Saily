@@ -46,8 +46,8 @@
 /* Block Update */
 "BLOCK_UPDATE" = "Block Update";
 
-/* Block Update All (By.zp) */
-"BLOCK_UPDATE_ALL" = "Block Update All (By.zp)";
+/* Block Update All */
+"BLOCK_UPDATE_ALL" = "Block Update All";
 
 /* Broken Repo Removed */
 "BROKEN_REPO_REMOVED" = "Broken Repos Removed";
@@ -241,8 +241,8 @@
 /* Install */
 "INSTALL" = "Install";
 
-/* Install All (By.zp) */
-"INSTALL_ALL" = "Install All (By.zp)";
+/* Install All */
+"INSTALL_ALL" = "Install All";
 
 /* Installation Info Refreshed */
 "INSTALLATION_INFO_REFRESHED" = "Installation Info Refreshed";

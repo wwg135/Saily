@@ -46,7 +46,7 @@
 /* Block Update */
 "BLOCK_UPDATE" = "封鎖更新";
 
-/* Block Update All (By.zp) */
+/* Block Update All */
 "BLOCK_UPDATE_ALL" = "全部封鎖更新";
 
 /* Broken Repo Removed */
@@ -241,7 +241,7 @@
 /* Install */
 "INSTALL" = "安裝";
 
-/* Install All (By.zp) */
+/* Install All */
 "INSTALL_ALL" = "全部安裝";
 
 /* Installation Info Refreshed */

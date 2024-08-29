@@ -46,7 +46,7 @@
 /* Block Update */
 "BLOCK_UPDATE" = "Ignorar actualizaciones";
 
-/* Block Update All (By.zp) */
+/* Block Update All */
 "BLOCK_UPDATE_ALL" = "Bloquear todas las actualizaciones";
 
 /* Broken Repo Removed */
@@ -241,7 +241,7 @@
 /* Install */
 "INSTALL" = "Instalar";
 
-/* Install All (By.zp) */
+/* Install All */
 "INSTALL_ALL" = "Instalar todo";
 
 /* Installation Info Refreshed */

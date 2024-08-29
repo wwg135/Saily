@@ -17,7 +17,7 @@ class PackageSavedCollectionController: PackageCollectionController {
                                         style: .done,
                                         target: self,
                                         action: #selector(clearBlock))
-        let installItem = UIBarButtonItem(title: NSLocalizedString("INSTALL_ALL", comment: "Install All (By.zp)"),
+        let installItem = UIBarButtonItem(title: NSLocalizedString("INSTALL_ALL", comment: "Install All"),
                                           style: .done,
                                           target: self,
                                           action: #selector(installAll))
