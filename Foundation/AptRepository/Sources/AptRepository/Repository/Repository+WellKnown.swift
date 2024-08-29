@@ -13,11 +13,7 @@ extension Repository {
     mutating func applyNoneFlatWellKnownRepositoryIfNeeded() {
         switch url.host {
         case "apt.procurs.us":
-            var magic: Double = floor(kCFCoreFoundationVersionNumber / 100.0 + 0.5) * 100.0
-            while magic > kCFCoreFoundationVersionNumber {
-                magic -= 100.0
-            }
-            distribution = "iphoneos-arm64-rootless/\(Int(magic))"
+            distribution = "1900" // hard coded for rootless
             component = "main"
             return
         case "apt.thebigboss.org", "apt.modmyi.com", "cydia.zodttd.com":
