@@ -44,7 +44,15 @@ enum AuxiliaryExecuteWrapper {
         }
     }
 
+    static func setupCommandLineEnvrionments() {
+        // prevent dylib to be injected to spawning tasks
+        setenv("_MSSafeMode", "1", 1)
+        setenv("DISABLE_TWEAKS", "1", 1)
+    }
+
     static func setupExecutables() {
+        setupCommandLineEnvrionments()
+
         var binaryLookupTable = [String: URL]()
 
         #if DEBUG
