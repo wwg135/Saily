@@ -11,17 +11,18 @@ cd ..
 
 GIT_ROOT=$(pwd)
 
-# assert that Chromatic.xcworkspace exists
 if [ ! -e "Chromatic.xcworkspace" ]; then
     echo "Chromatic.xcworkspace not found!"
     exit 1
 fi
 
-# if build not exists create it
+bartycrouch update
+bartycrouch lint
+swiftformat . --swiftversion 5.10
+
 if [ ! -e "build" ]; then
     mkdir build
 else
-    # if contains parameter clean, remove build folder
     if [ "$1" = "clean" ]; then
         rm -rf build
         mkdir build
@@ -29,32 +30,25 @@ else
 fi
 cd build || exit
 
-# run license scan at Resources/compile.license.py
 python3 "$GIT_ROOT/Resources/compile.license.py"
-
-# TIMESTAMP="$(date +%s)"
 
 cd $GIT_ROOT
 commit=$(git rev-parse HEAD | cut -c 1-7)
 TIMESTAMP=$(TZ=UTC-8 date '+%s').${commit}
 cd build
 
-# make a dir depending on timestamp
 WORKING_ROOT="Release-$TIMESTAMP"
 
-# if WORKING_ROOT exists, delete it
 if [ -e "$WORKING_ROOT" ]; then
     rm -rf "$WORKING_ROOT"
 fi
 
-# create WORKING_ROOT
 mkdir "$WORKING_ROOT"
 cd "$WORKING_ROOT" || exit
 
 WORKING_ROOT=$(pwd)
 echo "Starting build at $WORKING_ROOT"
 
-# xcodebuild and echo to xcpretty
 xcodebuild -workspace "$GIT_ROOT/Chromatic.xcworkspace" \
     -scheme Chromatic -configuration Release \
     -derivedDataPath "$WORKING_ROOT/DerivedDataApp" \
@@ -71,7 +65,6 @@ cd PackageBuilder || exit
 ENV_PREFIX="/var/jb"
 
 mkdir -p ".$ENV_PREFIX/Applications"
-# copy build result .app to Applications
 cp -r "$WORKING_ROOT/DerivedDataApp/Build/Products/Release-iphoneos/chromatic.app" ".$ENV_PREFIX/Applications/"
 
 codesign --remove ".$ENV_PREFIX/Applications/chromatic.app"
@@ -90,12 +83,9 @@ plutil -replace "CFBundleIdentifier" -string "wiki.qaq.chromatic.release" ".$ENV
 plutil -replace "CFBundleVersion" -string "2.1" ".$ENV_PREFIX/Applications/chromatic.app/Info.plist"
 plutil -replace "CFBundleShortVersionString" -string "$TIMESTAMP" ".$ENV_PREFIX/Applications/chromatic.app/Info.plist"
 
-# copy scaned license into chromatic.app/licenses
 cp -r "$GIT_ROOT/build/License/ScannedLicense" ".$ENV_PREFIX/Applications/chromatic.app/Bundle/ScannedLicense"
-
 cp -r "$GIT_ROOT/Resources/DEBIAN" ./
 
-# replace 'ENV_PREFIX=""' to 'ENV_PREFIX="/var/jb/"' in postinst
 sed -i '' "s/ENV_PREFIX=\"\"/ENV_PREFIX=\"\/var\/jb\/\"/g" ./DEBIAN/postinst
 
 sed -i '' "s/@@VERSION@@/2.1-REL-$TIMESTAMP/g" ./DEBIAN/control
@@ -114,14 +104,11 @@ echo "Finished build at $WORKING_ROOT"
 echo "Package available at $WORKING_ROOT/$PKG_NAME"
 
 mv $WORKING_ROOT/$PKG_NAME  $GIT_ROOT
-# rm -rf $WORKING_ROOT
 
 cd "$GIT_ROOT"/build
 
-# remove file .lastbuild.timestamp if exists
 if [ -e ".lastbuild.timestamp" ]; then
     rm -rf ".lastbuild.timestamp"
 fi
 
-# write TIMESTAMP into this file
 echo "$TIMESTAMP" > ".lastbuild.timestamp"

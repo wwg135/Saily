@@ -1060,8 +1060,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50D5290C2449B11600F4A483 /* Build configuration list for PBXNativeTarget "Chromatic" */;
 			buildPhases = (
-				501433FB26D0CDB80042A048 /* Swift Format */,
-				501433FC26D0CE6C0042A048 /* Bartycrouch Update */,
 				50D528B42449B11300F4A483 /* Sources */,
 				50D528B52449B11300F4A483 /* Frameworks */,
 				50D528B62449B11300F4A483 /* Resources */,
@@ -1194,44 +1192,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		501433FB26D0CDB80042A048 /* Swift Format */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Swift Format";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd $SOURCE_ROOT\npwd\nif ! command -v \"swiftformat\" &> /dev/null\nthen\n    echo \"swiftformat could not be found, skipping\"\n    exit 0\nfi\nswiftformat . --swiftversion 5.5\n";
-		};
-		501433FC26D0CE6C0042A048 /* Bartycrouch Update */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Bartycrouch Update";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "cd $SOURCE_ROOT\npwd\nif ! command -v \"bartycrouch\" &> /dev/null\nthen\n    echo \"bartycrouch could not be found, skipping\"\n    exit 0\nfi\nbartycrouch update -x -w\nbartycrouch lint -x -w\n";
-		};
 		507D4ABE2C8063F300CA34C5 /* Swift Format */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
