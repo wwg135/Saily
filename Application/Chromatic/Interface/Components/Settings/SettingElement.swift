@@ -86,6 +86,7 @@ class SettingElement: UIView {
             x.height.equalTo(20)
         }
 
+        button.clipsToBounds = false
         button.addTarget(self, action: #selector(buttonAnimate), for: .touchUpInside)
         button.snp.makeConstraints { x in
             x.center.equalTo(self.buttonImage)
@@ -93,6 +94,7 @@ class SettingElement: UIView {
             x.height.equalTo(30)
         }
 
+        dropDownHit.clipsToBounds = false
         dropDownHit.morphingEffect = .evaporate
         dropDownHit.font = UIFont.roundedFont(ofSize: 18, weight: .bold).monospacedDigitFont
         dropDownHit.textColor = .gray
@@ -101,6 +103,7 @@ class SettingElement: UIView {
             x.centerY.equalTo(self.snp.centerY)
             x.right.equalTo(self.snp.right).offset(-12)
             x.left.equalTo(label.snp.right).offset(8)
+            x.width.greaterThanOrEqualTo(150).priority(.low)
         }
 
         dropDownAnchor.snp.makeConstraints { x in
