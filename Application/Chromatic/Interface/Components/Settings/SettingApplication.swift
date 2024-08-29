@@ -123,6 +123,17 @@ extension SettingView {
                 AuxiliaryExecuteWrapper.reloadSpringboard()
             }
         }
+        let doReloadAirDrop = SettingElement(iconSystemNamed: "rays",
+                                             text: NSLocalizedString("RELOAD_AIRDROP", comment: "Reload AirDrop"),
+                                             dataType: .submenuWithAction,
+                                             initData: nil)
+        { _, anchor in
+            self.dropDownConfirm(anchor: anchor,
+                                 text: NSLocalizedString("RELOAD_AIRDROP", comment: "Reload AirDrop"))
+            {
+                AuxiliaryExecuteWrapper.reloadAirDrop()
+            }
+        }
         let safemode = SettingElement(iconSystemNamed: "shield",
                                       text: NSLocalizedString("ENTER_SAFE_MODE", comment: "Enter Safe Mode"),
                                       dataType: .submenuWithAction,
@@ -210,6 +221,7 @@ extension SettingView {
             addSubview(doRespring)
             addSubview(safemode)
         }
+        addSubview(doReloadAirDrop)
         addSubview(sourceCode)
         enableShareSheet.snp.makeConstraints { x in
             x.left.equalTo(safeAnchor.snp.left).offset(8)
@@ -278,6 +290,12 @@ extension SettingView {
                 x.height.equalTo(28)
             }
             anchor = safemode
+        }
+        doReloadAirDrop.snp.makeConstraints { x in
+            x.left.equalTo(safeAnchor.snp.left).offset(8)
+            x.right.equalTo(safeAnchor.snp.right).offset(-8)
+            x.top.equalTo(anchor.snp.bottom).offset(18)
+            x.height.equalTo(28)
         }
         sourceCode.snp.makeConstraints { x in
             x.left.equalTo(safeAnchor.snp.left).offset(8)

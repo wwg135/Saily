@@ -64,7 +64,7 @@ class PackageSavedCollectionController: PackageCollectionController {
                                                          isUserRequired: true) else { continue }
             actions.append(action)
         }
-        actions.forEach { TaskManager.shared.resolveInstall(action: $0) }
+        actions.forEach { _ = TaskManager.shared.resolveInstall(action: $0) }
     }
 
     func reloadCollectionItems() {

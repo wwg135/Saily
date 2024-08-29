@@ -123,6 +123,12 @@ enum AuxiliaryExecuteWrapper {
         rootspawn(command: killall, args: ["backboardd"], timeout: 0, output: { _ in })
     }
 
+    static func reloadAirDrop() {
+        let result = rootspawn(command: killall, args: ["-9", "sharingd"], timeout: 0, output: { _ in })
+        if result.0 == 0 { return }
+        Dog.shared.join("restart sharingd", "unexpected return code \(result.0)")
+    }
+
     @discardableResult
     static func rootspawn(command: String,
                           args: [String],

@@ -62,13 +62,13 @@ class HandyTabBarController: UITabBarController, UIGestureRecognizerDelegate {
                     if let controller = view.window?.topMostViewController as? HDInstalledController {
                         controller.searchController.searchBar.becomeFirstResponder()
                     }
-                    if let controller = view.window?.topMostViewController as? HDRepoController {
+                    if view.window?.topMostViewController is HDRepoController {
                         RepositoryCenter.default.dispatchForceUpdateRequestOnAll()
                         DispatchQueue.main.async {
                             NotificationCenter.default.post(name: .RepositoryQueueChanged, object: nil)
                         }
                     }
-                    if let controller = view.window?.topMostViewController as? HDMainController {
+                    if view.window?.topMostViewController is HDMainController {
                         RepositoryCenter.default.dispatchForceUpdateRequestOnAll()
                         DispatchQueue.main.async {
                             NotificationCenter.default.post(name: .RepositoryQueueChanged, object: nil)

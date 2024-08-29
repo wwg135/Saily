@@ -22,7 +22,7 @@ class TaskProcessor {
     public var rootlessPrefix = "/var/jb"
 
     private init() {
-        var res = AuxiliaryExecuteWrapper.rootspawn(command: "/var/jb/bin/readlink",
+        let res = AuxiliaryExecuteWrapper.rootspawn(command: "/var/jb/bin/readlink",
                                                     args: ["-f", "/var/jb"],
                                                     timeout: 2) { _ in }
         rootlessPrefix = (res.1).trimmingCharacters(in: .whitespacesAndNewlines)
