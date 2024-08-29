@@ -297,6 +297,7 @@ extension SettingView {
             x.top.equalTo(anchor.snp.bottom).offset(18)
             x.height.equalTo(28)
         }
+        anchor = doReloadAirDrop
         sourceCode.snp.makeConstraints { x in
             x.left.equalTo(safeAnchor.snp.left).offset(8)
             x.right.equalTo(safeAnchor.snp.right).offset(-8)
