@@ -2,26 +2,14 @@
 
 ## Modern. Fast. Beautiful.
 
-**You are right in rootless branch.**
+**You are right in main-rootless-3.0 branch.**
 
-DEB version of Saily will not work in rootless environment, or not designed to work. Install ipa with TrollStore.
-
-Special Notice For Rootless Version:
-- Rootless Prefix: "/var/jb"
-- dpkg, dpkg-deb, uicache, etc... are search inside "/var/jb/usr/bin"
-- Saily App is running with uid/gid inherited from jailbreak environment, container is mostly like to located at "/var/root/Documents/wiki.qaq.chromatic/". Search for logs there if any error are met.
-- Saily will spawn itself as subprocess while executing privileged commands, and asking jailbreakd for the root, exit after complete.
-- Do not install deb version of Saily.
-
-~~Release Channel Repo: https://sailyteam.github.io/repo/~~
-
-[![Build Release](https://github.com/SailyTeam/Saily/actions/workflows/build.yml/badge.svg)](https://github.com/SailyTeam/Saily/actions/workflows/build.yml)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/SailyTeam/Saily/pulls)
 [![Crowdin](https://badges.crowdin.net/saily/localized.svg)](https://crwd.in/saily)
 
 ![Preview](Resources/main.jpeg)
 
-Description: Saily is a modern APT package manager for jailbroken devices running iOS/iPadOS 13 and up.
+Description: Saily-Rootless-3.0 is a modern APT package manager for jailbroken devices running iOS/iPadOS 15 and up with Dopamine jailbreak.
 
 ## Saily Features
 
