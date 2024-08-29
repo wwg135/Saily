@@ -18,7 +18,6 @@ Saily is a modern APT package manager designed for jailbroken devices running iO
 - [x] Built to work alongside all your other package managers
 - [x] Support for Web Depictions with dark mode
 - [x] Support for Native Depictions with dark mode
-- [x] Support for all jailbreaks (excluding rootlessJB)
 - [x] Support for paid packages
 - [x] Clear Version Control page listing all available versions and repositories
 - [x] Clean and stable packaging using CI
