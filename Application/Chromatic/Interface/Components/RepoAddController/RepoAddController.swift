@@ -70,12 +70,11 @@ class RepoAddViewController: UIViewController {
         }
 
         do {
-            // Cydia
-            let cydiaRecord = try? FileManager
+            let aptRecord = try? FileManager
                 .default
                 .contentsOfDirectory(atPath: "/var/jb/etc/apt/sources.list.d/")
-            for item in cydiaRecord ?? [] {
-                if let read = try? String(contentsOfFile: "/etc/apt/sources.list.d/" + item) {
+            for item in aptRecord ?? [] {
+                if let read = try? String(contentsOfFile: "/var/jb/etc/apt/sources.list.d/" + item) {
                     for line in read.components(separatedBy: "\n") {
                         for each in line.components(separatedBy: " ") where each.hasPrefix("http") {
                             if let url = URL(string: each), !alreadyExists.contains(url) {
@@ -85,23 +84,6 @@ class RepoAddViewController: UIViewController {
                     }
                 }
             }
-            // Sileo
-            let sileoSearchPath = "/var/jb/etc/apt/sileo.list.d/"
-            let sileoRecord = try? FileManager
-                .default
-                .contentsOfDirectory(atPath: sileoSearchPath)
-            for item in sileoRecord ?? [] {
-                if let read = try? String(contentsOfFile: sileoSearchPath + item) {
-                    for line in read.components(separatedBy: "\n") {
-                        for each in line.components(separatedBy: " ") where each.hasPrefix("http") {
-                            if let url = URL(string: each), !alreadyExists.contains(url) {
-                                loaclRecordImport.append(url.absoluteString)
-                            }
-                        }
-                    }
-                }
-            }
-
             if loaclRecordImport.count > 0 {
                 Dog.shared.join(self, "found \(loaclRecordImport.count) importable repositories")
             }
