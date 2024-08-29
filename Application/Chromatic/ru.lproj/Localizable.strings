@@ -409,6 +409,9 @@
 /* Reinstall */
 "REINSTALL" = "Переустановить";
 
+/* Reload AirDrop */
+"RELOAD_AIRDROP" = "Перезагрузить AirDrop";
+
 /* Reload Desktop */
 "RELOAD_DESKTOP" = "Обновить рабочий стол";
 

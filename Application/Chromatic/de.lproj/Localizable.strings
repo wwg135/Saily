@@ -409,6 +409,9 @@
 /* Reinstall */
 "REINSTALL" = "Neu installieren";
 
+/* Reload AirDrop */
+"RELOAD_AIRDROP" = "AirDrop neu laden";
+
 /* Reload Desktop */
 "RELOAD_DESKTOP" = "SpringBoard neu laden";
 

@@ -409,6 +409,9 @@
 /* Reinstall */
 "REINSTALL" = "重新安装";
 
+/* Reload AirDrop */
+"RELOAD_AIRDROP" = "重启 AirDrop 服务";
+
 /* Reload Desktop */
 "RELOAD_DESKTOP" = "注销桌面";
 

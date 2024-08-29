@@ -411,6 +411,9 @@
 /* Reinstall */
 "REINSTALL" = "再インストール";
 
+/* Reload AirDrop */
+"RELOAD_AIRDROP" = "AirDropを再読み込み";
+
 /* Reload Desktop */
 "RELOAD_DESKTOP" = "ホーム画面を更新";
 

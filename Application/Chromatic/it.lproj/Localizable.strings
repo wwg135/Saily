@@ -409,6 +409,9 @@
 /* Reinstall */
 "REINSTALL" = "Reinstalla";
 
+/* Reload AirDrop */
+"RELOAD_AIRDROP" = "Ricarica AirDrop";
+
 /* Reload Desktop */
 "RELOAD_DESKTOP" = "Ricarica Schermata Home";
 

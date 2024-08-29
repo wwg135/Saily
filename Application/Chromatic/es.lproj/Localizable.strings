@@ -409,6 +409,9 @@
 /* Reinstall */
 "REINSTALL" = "Reinstalar";
 
+/* Reload AirDrop */
+"RELOAD_AIRDROP" = "Recargar AirDrop";
+
 /* Reload Desktop */
 "RELOAD_DESKTOP" = "Respring";
 
