@@ -139,7 +139,7 @@ class TaskProcessor {
             { str in
                 output(str)
             }
-            output("[*] returning \(result.0)\n")
+            output("[*] return \(result.0)\n")
         } while false
 
         // MARK: - UNINSTALL IF REQUIRED
@@ -166,7 +166,7 @@ class TaskProcessor {
                     Dog.shared.join(self, "dpkg rm: \(str)", level: .info)
                     output(str)
                 }
-                output("[*] returning \(result.0)\n")
+                output("[*] return \(result.0)\n")
             }
         } while false
 
@@ -193,7 +193,7 @@ class TaskProcessor {
                     Dog.shared.join(self, "dpkg inst: \(str)", level: .info)
                     output(str)
                 }
-                output("[*] returning \(result.0)\n")
+                output("[*] return \(result.0)\n")
             }
         } while false
 
@@ -216,7 +216,7 @@ class TaskProcessor {
                 Dog.shared.join(self, "dpkg config all")
                 output(str)
             }
-            output("[*] returning \(result.0)\n")
+            output("[*] return \(result.0)\n")
         } while false
 
         // MARK: - NOW LET'S CHECK WHAT WE HAVE WRITTEN
@@ -273,7 +273,7 @@ class TaskProcessor {
                 let result = AuxiliaryExecuteWrapper.rootspawn(command: AuxiliaryExecuteWrapper.uicache,
                                                                args: ["-p", item],
                                                                timeout: 10) { _ in }
-                output("[*] returning \(result.0)\n")
+                output("[*] return \(result.0)\n")
             }
         } while false
 
@@ -305,7 +305,7 @@ class TaskProcessor {
                 let result = AuxiliaryExecuteWrapper.rootspawn(command: AuxiliaryExecuteWrapper.uicache,
                                                                args: ["-u", path],
                                                                timeout: 10) { _ in }
-                output("[*] returning \(result.0)\n")
+                output("[*] return \(result.0)\n")
             }
         } while false
 
