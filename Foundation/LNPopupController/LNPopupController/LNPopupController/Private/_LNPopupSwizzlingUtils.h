@@ -2,8 +2,8 @@
 //  _LNPopupSwizzlingUtils.h
 //  LNPopupController
 //
-//  Created by Leo Natan on 1/14/18.
-//  Copyright © 2015-2021 Leo Natan. All rights reserved.
+//  Created by Léo Natan on 2020-07-31.
+//  Copyright © 2015-2024 Léo Natan. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -15,7 +15,7 @@
 #define LNSwizzleComplain(FORMAT, ...) \
 if(shouldTrapAndPrint) { \
 NSString *errStr = [NSString stringWithFormat:@"%s: " FORMAT,__func__,##__VA_ARGS__]; \
-NSLog(@"%@", errStr); \
+NSLog(@"LNPopupController: %@", errStr); \
 raise(SIGTRAP); \
 }
 
@@ -93,6 +93,11 @@ static void __LNCopyMethods(Class orig, Class target)
 LNAlwaysInline
 static BOOL LNDynamicallySubclass(id obj, Class target)
 {
+	if(obj == nil)
+	{
+		return NO;
+	}
+	
 	SEL canarySEL = NSSelectorFromString([NSString stringWithFormat:@"__LN_canaryInTheCoalMine_%@", NSStringFromClass(target)]);
 	if([object_getClass(obj) instancesRespondToSelector:canarySEL])
 	{
@@ -140,3 +145,4 @@ static Class LNDynamicSubclassSuper(id obj, Class dynamic)
 
 
 NSString* _LNPopupDecodeBase64String(NSString* base64String);
+NSArray<NSString*>* _LNPopupGetPropertyNames(Class cls, NSArray<NSString*>* excludedProperties);

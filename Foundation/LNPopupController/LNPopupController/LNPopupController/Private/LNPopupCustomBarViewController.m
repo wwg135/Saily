@@ -2,8 +2,8 @@
 //  LNPopupBarContentViewController.m
 //  LNPopupController
 //
-//  Created by Leo Natan on 15/12/2016.
-//  Copyright © 2015-2021 Leo Natan. All rights reserved.
+//  Created by Léo Natan on 2016-12-30.
+//  Copyright © 2015-2024 Léo Natan. All rights reserved.
 //
 
 #import "LNPopupCustomBarViewController+Private.h"
@@ -26,6 +26,15 @@
 	}
 	
 	return [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+}
+
+- (void)setContainingPopupBar:(LNPopupBar *)containingPopupBar
+{
+	[self willMoveToPopupBar:containingPopupBar];
+	
+	_containingPopupBar = containingPopupBar;
+	
+	[self didMoveToPopupBar];
 }
 
 - (void)viewDidLoad
@@ -56,6 +65,16 @@
 }
 
 - (void)popupItemDidUpdate
+{
+	
+}
+
+- (void)willMoveToPopupBar:(LNPopupBar *)newPopupBar
+{
+	
+}
+
+- (void)didMoveToPopupBar
 {
 	
 }
@@ -97,34 +116,62 @@
 
 - (void)_userFacing_viewWillAppear:(BOOL)animated
 {
+	__ln_popup_suppressViewControllerLifecycle = YES;
+	
 	Class superclass = LNDynamicSubclassSuper(self, _LNPopupCustomBarViewController_AppearanceControl.class);
 	struct objc_super super = {.receiver = self, .super_class = superclass};
 	void (*super_class)(struct objc_super*, SEL, BOOL) = (void*)objc_msgSendSuper;
 	super_class(&super, @selector(viewWillAppear:), animated);
+	
+	__ln_popup_suppressViewControllerLifecycle = NO;
+}
+
+- (void)_userFacing_viewIsAppearing:(BOOL)animated
+{
+	__ln_popup_suppressViewControllerLifecycle = YES;
+	
+	Class superclass = LNDynamicSubclassSuper(self, _LNPopupCustomBarViewController_AppearanceControl.class);
+	struct objc_super super = {.receiver = self, .super_class = superclass};
+	void (*super_class)(struct objc_super*, SEL, BOOL) = (void*)objc_msgSendSuper;
+	super_class(&super, @selector(viewIsAppearing:), animated);
+	
+	__ln_popup_suppressViewControllerLifecycle = NO;
 }
 
 - (void)_userFacing_viewDidAppear:(BOOL)animated
 {
+	__ln_popup_suppressViewControllerLifecycle = YES;
+	
 	Class superclass = LNDynamicSubclassSuper(self, _LNPopupCustomBarViewController_AppearanceControl.class);
 	struct objc_super super = {.receiver = self, .super_class = superclass};
 	void (*super_class)(struct objc_super*, SEL, BOOL) = (void*)objc_msgSendSuper;
 	super_class(&super, @selector(viewDidAppear:), animated);
+	
+	__ln_popup_suppressViewControllerLifecycle = NO;
 }
 
 - (void)_userFacing_viewWillDisappear:(BOOL)animated
 {
+	__ln_popup_suppressViewControllerLifecycle = YES;
+	
 	Class superclass = LNDynamicSubclassSuper(self, _LNPopupCustomBarViewController_AppearanceControl.class);
 	struct objc_super super = {.receiver = self, .super_class = superclass};
 	void (*super_class)(struct objc_super*, SEL, BOOL) = (void*)objc_msgSendSuper;
 	super_class(&super, @selector(viewWillDisappear:), animated);
+	
+	__ln_popup_suppressViewControllerLifecycle = NO;
 }
 
 - (void)_userFacing_viewDidDisappear:(BOOL)animated
 {
+	__ln_popup_suppressViewControllerLifecycle = YES;
+	
 	Class superclass = LNDynamicSubclassSuper(self, _LNPopupCustomBarViewController_AppearanceControl.class);
 	struct objc_super super = {.receiver = self, .super_class = superclass};
 	void (*super_class)(struct objc_super*, SEL, BOOL) = (void*)objc_msgSendSuper;
 	super_class(&super, @selector(viewDidDisappear:), animated);
+	
+	__ln_popup_suppressViewControllerLifecycle = NO;
 }
 
 @end
@@ -136,6 +183,11 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	//Ignored
+}
+
+- (void)viewIsAppearing:(BOOL)animated
+{
+	//Ignore
 }
 
 - (void)viewDidAppear:(BOOL)animated
