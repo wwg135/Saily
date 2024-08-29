@@ -89,6 +89,7 @@ class PackageBannerView: UIView {
         button.titleLabel?.font = .systemFont(ofSize: 14, weight: .bold)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.gray, for: .highlighted)
+
         // 安装增加长按菜单，短按就直接安装
         if InterfaceBridge.enableQuickMode {
             button.addTarget(self, action: #selector(dropDownActionListQuick), for: .touchUpInside)
@@ -97,6 +98,7 @@ class PackageBannerView: UIView {
         } else {
             button.addTarget(self, action: #selector(dropDownActionList), for: .touchUpInside)
         }
+
         button.snp.makeConstraints { x in
             x.centerY.equalToSuperview()
             x.right.equalToSuperview().offset(-20)
@@ -186,8 +188,12 @@ class PackageBannerView: UIView {
             }
             return NSLocalizedString("INSTALL", comment: "Install").uppercased()
         }
-        // 如果是已经安装的，需要看一下action里面的第一个是什么，可能是删除，也可能是更新
-        return getButtonStringFromActions() //  NSLocalizedString("OPTION", comment: "Option").uppercased()
+        if InterfaceBridge.enableQuickMode {
+            // 如果是已经安装的，需要看一下action里面的第一个是什么，可能是删除，也可能是更新
+            return getButtonStringFromActions()
+        } else {
+            return NSLocalizedString("OPTION", comment: "Option").uppercased()
+        }
     }
 
     func getButtonStringFromActions() -> String {
