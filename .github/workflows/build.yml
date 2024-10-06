@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@master
 
       - name: Install Dependencies
-        run: brew install ldid xz dpkg coreutils
+        run: brew install ldid xz dpkg coreutils bartycrouch
 
       - name: Build
         run: |
