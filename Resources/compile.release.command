@@ -97,7 +97,7 @@ awk '{print} END{print "Conflicts: wiki.qaq.chromatic"}' ./DEBIAN/control_ > ./D
 
 chmod -R 0755 DEBIAN
 
-PKG_NAME="Saily.$TIMESTAMP.deb"
+PKG_NAME="chromatic.rel.ci.$TIMESTAMP.deb"
 dpkg-deb -b . "../$PKG_NAME"
 
 echo "Finished build at $WORKING_ROOT"
