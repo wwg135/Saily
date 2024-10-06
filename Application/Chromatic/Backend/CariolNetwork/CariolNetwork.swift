@@ -173,6 +173,16 @@ class CariolNetwork {
                                                                   error: nil)
             NotificationCenter.default.post(name: .DownloadProgress, object: notification)
             return
+        } else {
+                // possibly that package was updated without modifying the url
+                Dog.shared.join(self, "cached file at \(cache.path) for request \(url.absoluteString) failed verification")
+                try? FileManager.default.removeItem(at: cache)
+                DiggerCache.removeTempFile(with: url)
+                DiggerCache.removeCacheFile(with: url)
+                accessLock.lock()
+                completedFileLookup.removeValue(forKey: url)
+                accessLock.unlock()
+            }
         }
 
         debugPrint("preparing request to \(url.absoluteString)")
