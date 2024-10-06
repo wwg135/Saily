@@ -74,14 +74,28 @@ extension SettingView {
             }
         }
 
-        #if DEBUG
-            let crashApp = SettingElement(iconSystemNamed: "xmark.octagon.fill",
-                                          text: "EXEC_BAD_ACCESS",
-                                          dataType: .submenuWithAction, initData: nil)
-            { _, _ in
-                fatalError("simulated application crash by user", file: #file, line: #line)
+        let enableDefaultSource = SettingElement(iconSystemNamed: "plus",
+                                             text: NSLocalizedString("ENABLE_ADD_DEFAULT_SOURCE", comment: "Enable Add Default Source"),
+                                             dataType: .switcher) {
+            InterfaceBridge.enableDefaultSource ? "YES" : "NO"
+        } withAction: { changeValueTo, _ in
+            if changeValueTo ?? false {
+                InterfaceBridge.enableDefaultSource = true
+                self.dispatchValueUpdate()
+            } else {
+                InterfaceBridge.enableDefaultSource = false
+                self.dispatchValueUpdate()
             }
-        #endif
+        }
+        
+
+#if DEBUG
+        let crashApp = SettingElement(iconSystemNamed: "xmark.octagon.fill",
+                                      text: "EXEC_BAD_ACCESS",
+                                      dataType: .submenuWithAction, initData: nil) { _, _ in
+            fatalError("simulated application crash by user", file: #file, line: #line)
+        }
+#endif
         let doUicache = SettingElement(iconSystemNamed: "square.grid.2x2",
                                        text: NSLocalizedString("REBUILD_ICONS", comment: "Rebuild Icons"),
                                        dataType: .submenuWithAction,
@@ -209,10 +223,11 @@ extension SettingView {
         addSubview(backgroundView)
         addSubview(enableShareSheet)
         addSubview(enableQuickMode)
-        #if DEBUG
-            addSubview(crashApp)
-        #endif
-        if InterfaceBridge.enableQuickMode {
+        addSubview(enableDefaultSource)
+#if DEBUG
+        addSubview(crashApp)
+#endif
+        if(InterfaceBridge.enableQuickMode){
             addSubview(doUicacheQuick)
             addSubview(doRespringQuick)
             addSubview(safemodeQuick)
@@ -237,16 +252,23 @@ extension SettingView {
             x.height.equalTo(28)
         }
         anchor = enableQuickMode
-        #if DEBUG
-            crashApp.snp.makeConstraints { x in
-                x.left.equalTo(safeAnchor.snp.left).offset(8)
-                x.right.equalTo(safeAnchor.snp.right).offset(-8)
-                x.top.equalTo(anchor.snp.bottom).offset(18)
-                x.height.equalTo(28)
-            }
-            anchor = crashApp
-        #endif
-        if InterfaceBridge.enableQuickMode {
+        enableDefaultSource.snp.makeConstraints { x in
+            x.left.equalTo(safeAnchor.snp.left).offset(8)
+            x.right.equalTo(safeAnchor.snp.right).offset(-8)
+            x.top.equalTo(anchor.snp.bottom).offset(18)
+            x.height.equalTo(28)
+        }
+        anchor = enableDefaultSource
+#if DEBUG
+        crashApp.snp.makeConstraints { x in
+            x.left.equalTo(safeAnchor.snp.left).offset(8)
+            x.right.equalTo(safeAnchor.snp.right).offset(-8)
+            x.top.equalTo(anchor.snp.bottom).offset(18)
+            x.height.equalTo(28)
+        }
+        anchor = crashApp
+#endif
+        if(InterfaceBridge.enableQuickMode){
             doUicacheQuick.snp.makeConstraints { x in
                 x.left.equalTo(safeAnchor.snp.left).offset(8)
                 x.right.equalTo(safeAnchor.snp.right).offset(-8)

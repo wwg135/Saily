@@ -27,21 +27,18 @@ extension InterfaceBridge {
     }
 
     static let taskDropDownActions: [TaskDropDownAction] = [
-        //        .init(label: NSLocalizedString("DRY_RUN", comment: "Dry Run"), action: {
-//            let target = OperationConsoleController()
-//            var dryRunPayload = $1
-//            dryRunPayload.dryRun = true
-//            target.operationPayload = dryRunPayload
-//            target.modalTransitionStyle = .coverVertical
-//            target.modalPresentationStyle = .formSheet
-//            $0.parentViewController?.present(target, animated: true, completion: nil)
-//        }),
         .init(label: NSLocalizedString("EXECUTE", comment: "Execute"), action: {
             let target = OperationConsoleController()
             target.operationPayload = $1
             target.modalTransitionStyle = .coverVertical
             target.modalPresentationStyle = .formSheet
             $0.parentViewController?.present(target, animated: true, completion: nil)
+        }),
+        .init(label: NSLocalizedString("OPEN_IN_FILZA", comment: "Open in Filza"), action: { _, _ in
+            let urlString = "filza://" + "/var/mobile/Documents/wiki.qaq.chromatic/Downloads/"
+            if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            }
         }),
     ]
 
