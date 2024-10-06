@@ -1252,7 +1252,7 @@
 					"@executable_path/Frameworks",
 				);
 				LK_DEBUG_ROOT = YES;
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = wiki.qaq.chromatic.rootless;
 				PRODUCT_NAME = chromatic;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1285,7 +1285,7 @@
 					"@executable_path/Frameworks",
 				);
 				LK_DEBUG_ROOT = YES;
-				MARKETING_VERSION = 2.1;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = wiki.qaq.chromatic;
 				PRODUCT_NAME = chromatic;
 				PROVISIONING_PROFILE_SPECIFIER = "";
